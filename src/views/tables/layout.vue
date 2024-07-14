@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import SideBar from "@/components/SideBar.vue"
 import NavigationBar from "@/components/NavigationBar.vue"
+import Content from "./components/Content.vue"
 </script>
 
 <template>
@@ -8,9 +9,11 @@ import NavigationBar from "@/components/NavigationBar.vue"
     class="h-screen w-full flex flex-col bg-[url('@/assets/bg.jpg')] bg-no-repeat bg-cover"
   >
     <navigation-bar />
-    <div class="flex flex-grow w-full">
+    <div
+      class="flex flex-1 w-full outline outline-yellow-500"
+    >
       <side-bar />
-      <main class="w-auto">main</main>
+      <Content />
     </div>
   </div>
 </template>

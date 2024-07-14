@@ -47,8 +47,8 @@ const menu = ref([
 </script>
 
 <template>
-  <aside class="flex">
-    <ul class="list-none w-28">
+  <aside class="flex w-28">
+    <ul class="list-none">
       <li
         v-for="(item, index) of menu"
         class="flex justify-center my-5 mx-0"
