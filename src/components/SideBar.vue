@@ -1,44 +1,39 @@
 <script setup lang="ts">
 import { message } from "ant-design-vue"
-import { ref, type Ref } from "vue"
-import menu1 from "@/assets/menu-1.png"
-import menu2 from "@/assets/menu-2.png"
-import menu3 from "@/assets/menu-3.png"
-import menu4 from "@/assets/menu-4.png"
-import menu5 from "@/assets/menu-5.png"
+import { ref } from "vue"
 
-const menu = ref([
+const items = ref([
   {
     title: "首页",
-    imgSrc: menu1,
+    icon: "home",
     click: () => {
       message.info("首页")
     },
   },
   {
     title: "设备布局",
-    imgSrc: menu2,
+    icon: "device",
     click: () => {
       message.info("设备布局")
     },
   },
   {
     title: "多源融合",
-    imgSrc: menu3,
+    icon: "multiple",
     click: () => {
       message.info("多源融合")
     },
   },
   {
     title: "各点预报",
-    imgSrc: menu4,
+    icon: "earth",
     click: () => {
       message.info("各点预报")
     },
   },
   {
     title: "实时检验",
-    imgSrc: menu5,
+    icon: "graph",
     click: () => {
       message.info("实时检验")
     },
@@ -48,16 +43,22 @@ const menu = ref([
 
 <template>
   <aside class="flex w-28">
-    <ul class="list-none">
+    <ul class="list-none mx-auto">
       <li
-        v-for="(item, index) of menu"
-        class="flex justify-center my-5 mx-0"
+        v-for="(item, index) of items"
+        :key="index"
+        class="flex justify-center my-8 mx-0 active:bg-blue-700/[0.5] hover:bg-blue-700/[0.5] rounded-md"
       >
         <div @click="item.click" class="p-1">
-          <img :src="item.imgSrc" class="h-16 w-auto" />
-          <span class="text-center w-full text-white">
+          <SvgIcon
+            :name="item.icon"
+            class="h-10 w-10 mx-auto"
+          />
+          <div
+            class="text-center w-full text-white text-base mt-2"
+          >
             {{ item.title }}
-          </span>
+          </div>
         </div>
       </li>
     </ul>
