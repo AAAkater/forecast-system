@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import VueApexCharts from "vue3-apexcharts"
 import { ref } from "vue"
+import VueApexCharts from "vue3-apexcharts"
 
 const series = ref([
   {
@@ -43,13 +43,7 @@ const options = {
   dataLabels: {
     enabled: false,
   },
-  colors: [
-    "#1273eb",
-    "#519515",
-    "#63a9ff",
-    "#daa81c",
-    "#ec4f3d",
-  ],
+  colors: ["#1273eb", "#519515", "#63a9ff", "#daa81c", "#ec4f3d"],
   stroke: {
     width: [3, 3, 3, 3, 3],
     curve: "straight",
@@ -133,8 +127,8 @@ const options = {
 <template>
   <VueApexCharts
     :options="options"
-    height="300"
-    width="600"
+    height="400"
+    width="100%"
     type="line"
     :series="series"
   />

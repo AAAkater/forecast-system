@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import VueApexCharts from "vue3-apexcharts"
 import { ref } from "vue"
+import VueApexCharts from "vue3-apexcharts"
 // 数据部分
 const series = ref([
   {
@@ -90,8 +90,8 @@ const options = ref({
 <template>
   <VueApexCharts
     :options="options"
-    height="300"
-    width="600"
+    height="400"
+    width="100%"
     type="boxPlot"
     :series="series"
   />

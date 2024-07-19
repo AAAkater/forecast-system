@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { DownloadOutlined } from "@ant-design/icons-vue"
 import { ref } from "vue"
-
 const items = ref([
   {
     name: "风",
@@ -25,7 +23,6 @@ const items = ref([
   },
 ])
 
-const wind_value = ref("")
 const wind_items = ref([
   {
     name: "1小时平均风",
@@ -38,7 +35,6 @@ const wind_items = ref([
   },
 ])
 
-const test_value = ref("")
 const test_items = ref([
   { name: "均方根误差" },
   { name: "平均绝对误差" },
@@ -49,42 +45,65 @@ const test_items = ref([
   { name: "风速散点回归" },
   { name: "空间分布图" },
 ])
+const activeKey = ref(0)
+
+const checkbox_value = ref([])
 </script>
 
 <template>
-  <div>
-    <a-space-compact block>
-      <a-button
-        type="primary"
-        class="flex"
-        v-for="(item, index) of items"
-      >
-        <SvgIcon :name="item.icon" class="h-full w-10" />
-        {{ item.name }}
-      </a-button>
-    </a-space-compact>
+  <a-tabs
+    v-model:activeKey="activeKey"
+    size="large"
+    class="h-80 w-full bg-white"
+    centered
+    type="card"
+  >
+    <a-tab-pane
+      v-for="(item, index) of items"
+      :key="index"
+    >
+      <template #tab>
+        <span>
+          <SvgIcon
+            :name="item.icon"
+            class="h-12 w-12"
+          />
+          <div class="flex w-full justify-center">
+            {{ item.name }}
+          </div>
+        </span>
+      </template>
 
-    <a-radio-group
-      button-style="solid"
-      v-model:value="wind_value"
-    >
-      <a-radio-button
-        v-for="(item, index) of wind_items"
-        :value="index"
-        >{{ item.name }}</a-radio-button
+      <a-checkbox-group
+        v-model:value="checkbox_value"
+        style="width: 100%"
       >
-    </a-radio-group>
-    <a-radio-group
-      button-style="solid"
-      v-model:value="test_value"
-    >
-      <a-radio-button
-        v-for="(item, index) of test_items"
-        :value="index"
-        >{{ item.name }}</a-radio-button
-      >
-    </a-radio-group>
-  </div>
+        <a-row>
+          <a-col
+            :span="12"
+            v-for="(item, index) of wind_items"
+            :key="index"
+          >
+            <a-checkbox :value="item.name">
+              {{ item.name }}
+            </a-checkbox>
+          </a-col>
+          <a-col :span="24">
+            <h5>检验方法</h5>
+          </a-col>
+          <a-col
+            :span="12"
+            v-for="(item, index) of test_items"
+            :key="index"
+          >
+            <a-checkbox :value="item.name">
+              {{ item.name }}
+            </a-checkbox>
+          </a-col>
+        </a-row>
+      </a-checkbox-group>
+    </a-tab-pane>
+  </a-tabs>
 </template>
 
 <style scoped lang="less"></style>
