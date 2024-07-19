@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import NavigationBar from "@/components/NavigationBar/index.vue"
-import SideBar from "@/components/SideBar.vue"
+import SideBar from "@/components/SideBar/index.vue"
 import Content from "./Content.vue"
 </script>
 
