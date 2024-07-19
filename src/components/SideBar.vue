@@ -42,21 +42,22 @@ const items = ref([
 </script>
 
 <template>
-  <aside class="flex w-28">
-    <ul class="list-none mx-auto">
+  <aside class="fixed left-0 flex h-full w-28 items-center justify-center">
+    <ul class="mx-auto list-none">
       <li
         v-for="(item, index) of items"
         :key="index"
-        class="flex justify-center my-8 mx-0 active:bg-blue-700/[0.5] hover:bg-blue-700/[0.5] rounded-md"
+        class="mx-0 my-8 flex justify-center rounded-md hover:bg-blue-700/[0.5] active:bg-blue-700/[0.5]"
       >
-        <div @click="item.click" class="p-1">
+        <div
+          @click="item.click"
+          class="p-1"
+        >
           <SvgIcon
             :name="item.icon"
-            class="h-10 w-10 mx-auto"
+            class="mx-auto h-10 w-10"
           />
-          <div
-            class="text-center w-full text-white text-base mt-2"
-          >
+          <div class="mt-2 w-full text-center text-base text-white">
             {{ item.title }}
           </div>
         </div>

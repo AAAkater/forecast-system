@@ -11,7 +11,7 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: "/",
-    component: () => import("@/views/tables/layout.vue"),
+    component: () => import("@/views/tables/index.vue"),
     children: [
       {
         path: "/tables",
@@ -19,8 +19,7 @@ const routes: RouteRecordRaw[] = [
           title: "实时检验",
           noAuth: true,
         },
-        component: () =>
-          import("@/views/tables/layout.vue"),
+        component: () => import("@/views/tables/index.vue"),
       },
     ],
   },
