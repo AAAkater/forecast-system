@@ -21,8 +21,6 @@ const onRangeOk = (value: [Dayjs, Dayjs]) => {
 </script>
 
 <template>
-  <div>
-    <div>监测评估 - 大运会赛区 - 风速评分</div>
     <a-range-picker
       :show-time="{ format: 'HH:mm' }"
       format="YYYY-MM-DD HH:mm"
@@ -31,7 +29,6 @@ const onRangeOk = (value: [Dayjs, Dayjs]) => {
       @ok="onRangeOk"
       size="large"
     />
-  </div>
 </template>
 
 <style lang="less" scoped></style>

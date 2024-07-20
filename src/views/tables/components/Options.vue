@@ -36,25 +36,21 @@ const wind_items = ref([
 ])
 
 const test_items = ref([
-  { name: "均方根误差" },
-  { name: "平均绝对误差" },
-  { name: "平均误差" },
-  { name: "风速准确率" },
-  { name: "风速评分" },
-  { name: "风速偏强率" },
-  { name: "风速散点回归" },
-  { name: "空间分布图" },
+  [{ name: "均方根误差" }, { name: "平均绝对误差" }],
+  [{ name: "平均误差" }, { name: "风速准确率" }],
+  [{ name: "风速评分" }, { name: "风速偏强率" }],
+  [{ name: "风速散点回归" }, { name: "空间分布图" }],
 ])
 const activeKey = ref(0)
 
-const checkbox_value = ref([])
+const test_value = ref([])
+const wind_value = ref([])
 </script>
 
 <template>
   <a-tabs
     v-model:activeKey="activeKey"
-    size="large"
-    class="h-80 w-full bg-white"
+    class="w-full rounded-2xl bg-white"
     centered
     type="card"
   >
@@ -62,46 +58,53 @@ const checkbox_value = ref([])
       v-for="(item, index) of items"
       :key="index"
     >
+      <!-- tabs -->
       <template #tab>
         <span>
           <SvgIcon
             :name="item.icon"
-            class="h-12 w-12"
+            class="h-10 w-10"
           />
           <div class="flex w-full justify-center">
             {{ item.name }}
           </div>
         </span>
       </template>
-
-      <a-checkbox-group
-        v-model:value="checkbox_value"
-        style="width: 100%"
+      <!-- 选项 -->
+      <a-radio-group
+        v-model:value="wind_value"
+        class="flex w-full justify-center"
+        size="large"
       >
-        <a-row>
-          <a-col
-            :span="12"
-            v-for="(item, index) of wind_items"
-            :key="index"
-          >
-            <a-checkbox :value="item.name">
-              {{ item.name }}
-            </a-checkbox>
-          </a-col>
-          <a-col :span="24">
-            <h5>检验方法</h5>
-          </a-col>
-          <a-col
-            :span="12"
-            v-for="(item, index) of test_items"
-            :key="index"
-          >
-            <a-checkbox :value="item.name">
-              {{ item.name }}
-            </a-checkbox>
-          </a-col>
-        </a-row>
-      </a-checkbox-group>
+        <a-radio-button
+          v-for="(item, index) of wind_items"
+          :value="item.name"
+        >
+          {{ item.name }}
+        </a-radio-button>
+      </a-radio-group>
+      <div class="my-10 flex w-full justify-center">检验方法</div>
+
+      <a-radio-group
+        v-model:value="test_value"
+        class="my-5 flex w-full justify-center"
+        size="large"
+        v-for="(item, index) of test_items"
+        :key="index"
+      >
+        <a-radio-button
+          class="w-32 text-center"
+          :value="item[0].name"
+        >
+          {{ item[0].name }}
+        </a-radio-button>
+        <a-radio-button
+          class="w-32 text-center"
+          :value="item[1].name"
+        >
+          {{ item[1].name }}
+        </a-radio-button>
+      </a-radio-group>
     </a-tab-pane>
   </a-tabs>
 </template>
