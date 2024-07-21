@@ -1,13 +1,7 @@
 <script setup lang="ts">
-import {
-  ExpandOutlined,
-  LockOutlined,
-  LoginOutlined,
-  UserOutlined,
-} from "@ant-design/icons-vue"
 import { message } from "ant-design-vue"
 import screenfull from "screenfull"
-import { h, ref } from "vue"
+import { ref } from "vue"
 
 const logout = () => {
   message.info("登出")
@@ -28,41 +22,65 @@ const expandOut = () => {
 </script>
 
 <template>
-  <div class="flex w-72 items-center justify-center">
-    <div class="flex w-full">
+  <div class="flex w-72 items-center justify-evenly">
+    <div class="flex w-full items-center justify-evenly">
       <a-button
         @click="expandOut"
-        ghost
-        :icon="h(ExpandOutlined)"
-        shape="circle"
         size="large"
-      />
+        class="flex w-24"
+      >
+        <SvgIcon
+          :name="isFull ? 'CancelExpandOut' : 'ExpandOut'"
+          class="h-6 w-6"
+        />
+        <span class="ml-2 flex h-6 w-10 items-center justify-center">全屏</span>
+      </a-button>
 
       <a-popover
         title=""
         placement="bottomRight"
-        class="ml-20"
       >
         <template #content>
           <div class="flex flex-col">
-            <a-button @click="lockout">
-              <LockOutlined />
-              锁屏
+            <a-button
+              @click="lockout"
+              size="large"
+              class="flex w-24"
+            >
+              <SvgIcon
+                name="LockOut"
+                class="h-6 w-6"
+              />
+              <span class="ml-2 flex h-6 w-10 items-center justify-center"
+                >锁屏</span
+              >
             </a-button>
-            <a-button @click="logout">
-              <LoginOutlined />
-              退出
+            <a-button
+              @click="logout"
+              size="large"
+              class="flex w-24"
+            >
+              <SvgIcon
+                name="LoginOut"
+                class="h-6 w-6"
+              />
+              <span class="ml-2 flex h-6 w-10 items-center justify-center"
+                >登出</span
+              >
             </a-button>
           </div>
         </template>
         <a-button
           size="large"
-          shape="circle"
-          ghost
+          class="flex w-24"
         >
-          <template #icon>
-            <UserOutlined />
-          </template>
+          <SvgIcon
+            name="admin"
+            class="h-6 w-6"
+          />
+          <span class="ml-2 flex h-6 w-10 items-center justify-center">
+            管理
+          </span>
         </a-button>
       </a-popover>
     </div>
