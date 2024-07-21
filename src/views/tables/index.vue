@@ -6,7 +6,7 @@ import Content from "./Content.vue"
 
 <template>
   <div
-    class="flex h-screen w-full justify-end bg-[url('@/assets/bg_2.jpg')] bg-cover bg-fixed bg-no-repeat"
+    class="flex h-screen w-full justify-end bg-[url('@/assets/bg.png')] bg-cover bg-fixed bg-no-repeat"
   >
     <navigation-bar />
     <SideBar />
