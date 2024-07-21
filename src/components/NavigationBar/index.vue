@@ -1,50 +1,44 @@
 <script setup lang="ts">
-import {
-  BankOutlined,
-  ControlOutlined,
-  GlobalOutlined,
-  TeamOutlined,
-} from "@ant-design/icons-vue"
-import { markRaw, ref } from "vue"
-const items = ref([
-  {
-    figures: 15,
-    unit: "座",
-    title: "服务城市",
-    icon: markRaw(BankOutlined),
-  },
-  {
-    figures: 2600,
-    unit: "台",
-    title: "终端设备",
-    icon: markRaw(ControlOutlined),
-  },
-  {
-    figures: 88.6,
-    unit: "km²",
-    title: "覆盖面积",
-    icon: markRaw(GlobalOutlined),
-  },
-  {
-    figures: 3000,
-    unit: "天",
-    title: "保障天数",
-    icon: markRaw(TeamOutlined),
-  },
-])
+// const items = ref([
+//   {
+//     figures: 15,
+//     unit: "座",
+//     title: "服务城市",
+//     icon: markRaw(BankOutlined),
+//   },
+//   {
+//     figures: 2600,
+//     unit: "台",
+//     title: "终端设备",
+//     icon: markRaw(ControlOutlined),
+//   },
+//   {
+//     figures: 88.6,
+//     unit: "km²",
+//     title: "覆盖面积",
+//     icon: markRaw(GlobalOutlined),
+//   },
+//   {
+//     figures: 3000,
+//     unit: "天",
+//     title: "保障天数",
+//     icon: markRaw(TeamOutlined),
+//   },
+// ])
 </script>
 
 <template>
   <header
-    class="fixed mb-5 h-36 w-full bg-[url('@/assets/title_bg.png')] bg-cover bg-no-repeat text-white"
+    class="fixed mb-5 h-36 w-full bg-[url('@/assets/head_bg.png')] bg-cover bg-no-repeat text-white"
   >
     <div class="flex h-16 justify-between">
       <TimeTable />
       <!-- <MiddleTitle /> -->
+      <div class="font-mono text-5xl">多源融合及次百米级临近预报</div>
       <Options />
     </div>
     <div class="flex items-center justify-center">
-      <ul class="flex list-none p-4">
+      <!-- <ul class="flex list-none p-4">
         <li
           v-for="(item, index) of items"
           :key="index"
@@ -60,7 +54,7 @@ const items = ref([
             </h1>
           </div>
         </li>
-      </ul>
+      </ul> -->
     </div>
   </header>
 </template>
