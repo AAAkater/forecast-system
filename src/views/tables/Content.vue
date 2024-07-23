@@ -27,22 +27,26 @@ const tables = ref([
       <div class="h-72 w-full" />
       <div class="bg-transparent">
         <div class="h-12">监测评估 - 大运会赛区 - 风速评分</div>
-        <div class="rounded-lg bg-blue-500/[0.2]">
+        <div>
           <!-- 时间选择 -->
-          <div class="my-5 flex h-16 w-full justify-center p-2">
+          <div
+            class="my-5 flex h-40 w-full items-center justify-center rounded-lg bg-[#142850] bg-opacity-75 p-2"
+          >
             <SelectTime />
           </div>
           <!-- 表格 -->
           <div
             v-for="(table, index) of tables"
             :key="index"
-            class="w-full"
+            class="my-4 w-full rounded-xl bg-[#142850] bg-opacity-75"
           >
-            <div class="flex h-16 w-full justify-center">
+            <div class="h-16 w-full text-center text-3xl">
               {{ table.title }}
             </div>
             <div class="h-auto w-full p-12">
-              <component :is="table.component" />
+              <div class="rounded-xl bg-[#142850] bg-opacity-75 p-5">
+                <component :is="table.component" />
+              </div>
             </div>
           </div>
         </div>
