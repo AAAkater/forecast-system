@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import { Menu, MenuItem, MenuItems, TransitionRoot } from "@headlessui/vue"
 import { message } from "ant-design-vue"
-import { ref } from "vue"
-
+import { onMounted, ref } from "vue"
+const current = ref<string[]>(["mail"])
 const items = ref([
   {
     title: "首页",
@@ -39,31 +40,56 @@ const items = ref([
     },
   },
 ])
+
+const isVisible = ref(false)
+onMounted(() => {
+  setTimeout(() => {
+    isVisible.value = true
+  }, 500)
+})
 </script>
 
 <template>
-  <aside class="fixed left-0 flex h-full w-28 items-center justify-center">
-    <ul class="mx-auto list-none">
-      <li
-        v-for="(item, index) of items"
-        :key="index"
-        class="mx-0 my-8 flex justify-center rounded-md hover:bg-blue-700/[0.5] active:bg-blue-700/[0.5]"
-      >
-        <div
-          @click="item.click"
-          class="p-1"
-        >
-          <SvgIcon
-            :name="item.icon"
-            class="mx-auto h-10 w-10"
-          />
-          <div class="mt-2 w-full text-center text-base text-white">
-            {{ item.title }}
-          </div>
-        </div>
-      </li>
-    </ul>
-  </aside>
+  <TransitionRoot
+    appear
+    :show="isVisible"
+    as="template"
+    enter="transform transition duration-1000"
+    enter-from="-translate-x-full"
+    enter-to="translate-x-0"
+    leave="transform transition duration-1000"
+    leave-from="translate-x-0"
+    leave-to="-translate-x-full"
+  >
+    <aside class="fixed left-0 flex h-full w-28 items-center justify-center">
+      <Menu>
+        <MenuItems :static="true">
+          <MenuItem
+            v-for="(item, index) of items"
+            :key="index"
+            v-slot="{ active }"
+            class="hover: mx-0 my-8 flex h-20 w-20 justify-center rounded-md"
+          >
+            <div
+              @click="item.click"
+              class="mt-2 w-full p-1 text-center text-white shadow-lg"
+              :class="{ 'bg-blue-700/[0.5]': active }"
+            >
+              <div>
+                <SvgIcon
+                  :name="item.icon"
+                  class="mx-auto h-10 w-10"
+                />
+                <div class="mt-2 w-full text-center text-base text-white">
+                  {{ item.title }}
+                </div>
+              </div>
+            </div>
+          </MenuItem>
+        </MenuItems>
+      </Menu>
+    </aside>
+  </TransitionRoot>
 </template>
 
 <style scoped lang="less"></style>
