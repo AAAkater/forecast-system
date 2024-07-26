@@ -1,14 +1,8 @@
 <script setup lang="ts">
-import { onMounted, ref, type Ref } from "vue"
-interface formatTime {
-  year: number
-  month: number
-  day: number
-  weekday: string
-  time: string
-}
-const now = new Date()
-const week_days = new Array(
+import dayjs from "dayjs"
+import { computed, onBeforeUnmount, onMounted, ref } from "vue"
+
+const weeks = [
   "星期日",
   "星期一",
   "星期二",
@@ -16,45 +10,38 @@ const week_days = new Array(
   "星期四",
   "星期五",
   "星期六",
-)
-const currentTime: Ref<formatTime> = ref({
-  year: now.getFullYear(),
-  month: now.getMonth(),
-  day: now.getDay(),
-  weekday: week_days[now.getDay()],
-  time: now.toLocaleTimeString(),
-})
-function getFormattedDateTime() {
-  const now = new Date()
-  let _time: formatTime = {
-    year: now.getFullYear(),
-    month: now.getMonth(),
-    day: now.getDay(),
-    weekday: week_days[now.getDay()],
-    time: now.toLocaleTimeString(),
-  }
-  currentTime.value = _time
-}
+]
+const day = dayjs().format("YYYY年MM月DD日")
+const time = ref(dayjs().add(1, "second").format("HH:mm:ss"))
+const week = dayjs().day()
+
+const dWeek = computed(() => weeks[week])
+
+let timeId: number | null = null
+
 onMounted(() => {
-  setInterval(getFormattedDateTime, 1000)
+  timeId = setInterval(() => {
+    time.value = dayjs().add(1, "second").format("HH:mm:ss")
+  }, 1000)
+})
+
+onBeforeUnmount(() => {
+  // 组件销毁前清除定时器
+  if (timeId) {
+    clearInterval(timeId)
+  }
 })
 </script>
 
 <template>
-  <div class="flex w-72 items-center justify-center">
+  <div class="flex w-72 items-center justify-center font-mono">
     <div class="flex">
       <div class="flex items-center justify-center text-3xl">
-        {{ currentTime.time }}
+        {{ time }}
       </div>
       <div class="ml-7">
-        <p>
-          {{
-            `${currentTime.year}年${currentTime.month}月${currentTime.day}日`
-          }}
-        </p>
-        <p>
-          {{ currentTime.weekday }}
-        </p>
+        <div>{{ day }}</div>
+        <div>{{ dWeek }}</div>
       </div>
     </div>
   </div>
