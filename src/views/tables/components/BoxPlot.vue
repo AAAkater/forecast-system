@@ -94,6 +94,7 @@ const options = ref({
     width="100%"
     type="boxPlot"
     :series="series"
+    class=" text-black"
   />
 </template>
 

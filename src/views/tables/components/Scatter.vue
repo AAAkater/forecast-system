@@ -148,6 +148,7 @@ const options = ref({
     width="100%"
     type="scatter"
     :series="series"
+    class="text-black"
   />
 </template>
 

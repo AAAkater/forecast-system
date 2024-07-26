@@ -131,6 +131,7 @@ const options = {
     width="100%"
     type="line"
     :series="series"
+    class="text-black"
   />
 </template>
 

@@ -21,17 +21,15 @@ const onRangeOk = (value: [Dayjs, Dayjs]) => {
 </script>
 
 <template>
-  <div>
-    <div>监测评估 - 大运会赛区 - 风速评分</div>
-    <a-range-picker
-      :show-time="{ format: 'HH:mm' }"
-      format="YYYY-MM-DD HH:mm"
-      :placeholder="['开始时间', '结束时间']"
-      @change="onRangeChange"
-      @ok="onRangeOk"
-      size="large"
-    />
-  </div>
+  <a-range-picker
+    :show-time="{ format: 'HH:mm' }"
+    format="YYYY-MM-DD HH:mm"
+    :placeholder="['开始时间', '结束时间']"
+    @change="onRangeChange"
+    @ok="onRangeOk"
+    size="large"
+    class="h-20 w-1/3"
+  />
 </template>
 
 <style lang="less" scoped></style>
