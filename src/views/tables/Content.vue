@@ -40,8 +40,12 @@ const tables = ref([
             :key="index"
             class="my-4 w-full rounded-xl bg-[#142850] bg-opacity-75"
           >
-            <div class="h-16 w-full text-center text-3xl">
-              {{ table.title }}
+            <div class="flex h-16 w-full items-center text-lg">
+              <div
+                class="h-10 w-4/5 bg-[url('@/assets/table_title_bg.png')] bg-cover bg-no-repeat"
+              >
+                {{ table.title }}
+              </div>
             </div>
             <div class="h-auto w-full p-12">
               <div class="rounded-xl bg-[#142850] bg-opacity-75 p-5">
