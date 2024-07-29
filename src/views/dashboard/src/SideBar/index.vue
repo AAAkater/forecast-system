@@ -1,4 +1,9 @@
 <script setup lang="ts">
+import DeviceSvg from "@/assets/icons/device.svg"
+import ForecastSvg from "@/assets/icons/earth.svg"
+import GraphSvg from "@/assets/icons/graph.svg"
+import HomeSvg from "@/assets/icons/home.svg"
+import MultipleSvg from "@/assets/icons/multiple.svg"
 import { Menu, MenuItem, MenuItems, TransitionRoot } from "@headlessui/vue"
 import { onMounted, ref } from "vue"
 import { useRouter } from "vue-router"
@@ -6,35 +11,35 @@ const router = useRouter()
 const items = ref([
   {
     title: "首页",
-    icon: "home",
+    icon: HomeSvg,
     click: () => {
       router.push("/dashboard/home")
     },
   },
   {
     title: "设备布局",
-    icon: "device",
+    icon: DeviceSvg,
     click: () => {
       router.push("/dashboard/device")
     },
   },
   {
     title: "多源融合",
-    icon: "multiple",
+    icon: MultipleSvg,
     click: () => {
       router.push("/dashboard/multiple")
     },
   },
   {
     title: "各点预报",
-    icon: "earth",
+    icon: ForecastSvg,
     click: () => {
       router.push("/dashboard/forecast")
     },
   },
   {
     title: "实时检验",
-    icon: "graph",
+    icon: GraphSvg,
     click: () => {
       router.push("/dashboard/tables")
     },
@@ -76,8 +81,12 @@ onMounted(() => {
               :class="{ 'bg-blue-700/[0.5]': active }"
             >
               <div>
-                <SvgIcon
+                <!-- <SvgIcon
                   :name="item.icon"
+                  class="mx-auto h-10 w-10"
+                /> -->
+                <img
+                  :src="item.icon"
                   class="mx-auto h-10 w-10"
                 />
                 <div class="mt-2 w-full text-center text-base text-white">
