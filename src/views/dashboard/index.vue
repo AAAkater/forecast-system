@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import NavigationBar from "@/components/NavigationBar/index.vue"
-import SideBar from "@/components/SideBar/index.vue"
-import Content from "./Content.vue"
+import NavigationBar from "./src/NavigationBar/index.vue"
+import SideBar from "./src/SideBar/index.vue"
 </script>
 
 <template>
@@ -9,8 +8,8 @@ import Content from "./Content.vue"
     class="flex h-screen w-full justify-end bg-[url('@/assets/bg.png')] bg-cover bg-fixed bg-no-repeat"
   >
     <navigation-bar />
-    <SideBar />
-    <Content />
+    <side-bar />
+    <router-view />
   </div>
 </template>
 

@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { message } from "ant-design-vue"
 import screenfull from "screenfull"
 import { ref } from "vue"
-
+import { useRouter } from "vue-router"
+const router = useRouter()
 const logout = () => {
-  message.info("登出")
+  router.push("/login")
 }
 const lockout = () => {
-  message.info("锁屏")
+  router.push("/lock")
 }
 // 全屏
 const isFull = ref(false)

@@ -1,42 +1,42 @@
 <script setup lang="ts">
 import { Menu, MenuItem, MenuItems, TransitionRoot } from "@headlessui/vue"
-import { message } from "ant-design-vue"
 import { onMounted, ref } from "vue"
-const current = ref<string[]>(["mail"])
+import { useRouter } from "vue-router"
+const router = useRouter()
 const items = ref([
   {
     title: "首页",
     icon: "home",
     click: () => {
-      message.info("首页")
+      router.push("/dashboard/home")
     },
   },
   {
     title: "设备布局",
     icon: "device",
     click: () => {
-      message.info("设备布局")
+      router.push("/dashboard/device")
     },
   },
   {
     title: "多源融合",
     icon: "multiple",
     click: () => {
-      message.info("多源融合")
+      router.push("/dashboard/multiple")
     },
   },
   {
     title: "各点预报",
     icon: "earth",
     click: () => {
-      message.info("各点预报")
+      router.push("/dashboard/forecast")
     },
   },
   {
     title: "实时检验",
     icon: "graph",
     click: () => {
-      message.info("实时检验")
+      router.push("/dashboard/tables")
     },
   },
 ])
