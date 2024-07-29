@@ -34,7 +34,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="flex w-72 items-center justify-center font-mono">
+  <div class="flex w-80 items-center justify-center font-mono">
     <div class="flex">
       <div class="flex items-center justify-center text-3xl">
         {{ time }}
