@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue"
 import BoxPlot from "./components/BoxPlot.vue"
-import Options from "./components/Options.vue"
+// import Options from "./components/Options.vue"
+import NewOptions from "./components/NewOptions.vue"
 import Scatter from "./components/Scatter.vue"
 import SelectTime from "./components/SelectTime.vue"
 import StepLine from "./components/StepLine.vue"
@@ -57,7 +58,8 @@ const tables = ref([
       </div>
     </div>
     <div class="flex w-[30%] items-center justify-center p-6">
-      <Options />
+      <!-- <Options /> -->
+      <NewOptions />
     </div>
   </main>
 </template>
