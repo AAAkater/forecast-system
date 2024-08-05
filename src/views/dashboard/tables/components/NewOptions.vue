@@ -111,10 +111,8 @@ watch(test_value, () => {
           <!-- 风选项按钮组 -->
           <RadioGroup
             v-model="wind_value"
-            class="flex outline outline-black"
+            class="grid grid-cols-[1fr_1fr] gap-x-4 gap-y-2"
           >
-            <!-- <RadioGroupLabel>wind</RadioGroupLabel> -->
-
             <RadioGroupOption
               v-for="(item, idx) of wind_items"
               :key="idx"
@@ -124,8 +122,11 @@ watch(test_value, () => {
             >
               <button
                 :class="[
-                  active ? 'bg-blue-500 text-white' : 'bg-white text-black',
-                  'mx-3 outline outline-blue-700',
+                  'flex w-full justify-center rounded-lg py-2.5 text-sm font-medium leading-5',
+                  'ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
+                  active
+                    ? 'bg-white text-blue-700 shadow'
+                    : 'text-blue-100 hover:bg-white/[0.12] hover:text-white',
                 ]"
                 v-show="item.name !== '凑数的阵风'"
               >
@@ -135,11 +136,11 @@ watch(test_value, () => {
             </RadioGroupOption>
           </RadioGroup>
           <!-- 测试方法按钮组 -->
+          <div class="w-full text-center text-black">测试方法</div>
           <RadioGroup
             v-model="test_value"
-            class="outline"
+            class="mt-12 grid grid-cols-[1fr_1fr] gap-x-4 gap-y-2"
           >
-            <!-- <RadioGroupLabel>test</RadioGroupLabel> -->
             <RadioGroupOption
               v-for="(item, idx) of test_items"
               :key="idx"
@@ -149,8 +150,11 @@ watch(test_value, () => {
             >
               <button
                 :class="[
-                  active ? 'bg-blue-500 text-white' : 'bg-white text-black',
-                  'mx-3',
+                  'flex justify-center rounded-lg py-2.5 text-sm font-medium leading-5',
+                  'ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
+                  active
+                    ? 'bg-white text-blue-700 shadow'
+                    : 'text-blue-100 hover:bg-white/[0.12] hover:text-white',
                 ]"
               >
                 <!-- <CheckIcon v-show="checked" /> -->
@@ -164,4 +168,10 @@ watch(test_value, () => {
   </div>
 </template>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+.tsd {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 20px;
+}
+</style>
