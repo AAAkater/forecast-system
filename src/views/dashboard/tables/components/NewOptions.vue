@@ -43,9 +43,6 @@ const wind_items = ref([
   {
     name: "3小时阵风",
   },
-  {
-    name: "凑数的阵风",
-  },
 ])
 
 const test_items = ref([
@@ -55,6 +52,7 @@ const test_items = ref([
   { name: "风速准确率" },
   { name: "风速评分" },
   { name: "风速偏强率" },
+  { name: "风速偏弱率" },
   { name: "风速散点回归" },
   { name: "空间分布图" },
 ])
@@ -72,9 +70,9 @@ watch(test_value, () => {
 </script>
 
 <template>
-  <div class="w-full max-w-md px-2 py-16 sm:px-0">
+  <div class="w-full xl:max-w-md">
     <TabGroup :default-index="1">
-      <TabList class="flex space-x-1 rounded-xl bg-blue-900/20 p-1">
+      <TabList class="flex space-x-1 rounded-xl bg-blue-400/50 p-1">
         <Tab
           v-for="(tab, idx) of tabs"
           as="template"
@@ -87,7 +85,7 @@ watch(test_value, () => {
               'ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
               selected
                 ? 'bg-white text-blue-700 shadow'
-                : 'text-blue-100 hover:bg-white/[0.12] hover:text-white',
+                : 'text-blue-100 hover:bg-blue-500/30 hover:text-white',
             ]"
           >
             <SvgIcon
@@ -103,10 +101,7 @@ watch(test_value, () => {
         <TabPanel
           v-for="(tab, idx) of tabs"
           :key="idx"
-          :class="[
-            'rounded-xl bg-white p-3',
-            'ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
-          ]"
+          :class="['rounded-xl bg-blue-500/15 p-3']"
         >
           <!-- 风选项按钮组 -->
           <RadioGroup
@@ -122,13 +117,12 @@ watch(test_value, () => {
             >
               <button
                 :class="[
-                  'flex w-full justify-center rounded-lg py-2.5 text-sm font-medium leading-5',
+                  'flex w-full justify-center rounded-lg py-2.5 text-lg font-medium leading-5',
                   'ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
                   active
                     ? 'bg-white text-blue-700 shadow'
-                    : 'text-blue-100 hover:bg-white/[0.12] hover:text-white',
+                    : 'bg-slate-600 text-blue-100 hover:bg-blue-500/30 hover:text-white',
                 ]"
-                v-show="item.name !== '凑数的阵风'"
               >
                 <!-- <CheckIcon v-show="checked" /> -->
                 {{ item.name }}
@@ -136,10 +130,17 @@ watch(test_value, () => {
             </RadioGroupOption>
           </RadioGroup>
           <!-- 测试方法按钮组 -->
-          <div class="w-full text-center text-black">测试方法</div>
+          <div
+            :class="[
+              'my-5 h-8 w-full pl-10 font-sans text-xl text-white',
+              `bg-[url('@/assets/card_bg.png')] bg-cover bg-left bg-no-repeat`,
+            ]"
+          >
+            测试方法
+          </div>
           <RadioGroup
             v-model="test_value"
-            class="mt-12 grid grid-cols-[1fr_1fr] gap-x-4 gap-y-2"
+            class="grid grid-cols-[1fr_1fr] gap-x-4 gap-y-2"
           >
             <RadioGroupOption
               v-for="(item, idx) of test_items"
@@ -150,11 +151,11 @@ watch(test_value, () => {
             >
               <button
                 :class="[
-                  'flex justify-center rounded-lg py-2.5 text-sm font-medium leading-5',
+                  'flex justify-center rounded-lg py-2.5 text-lg font-medium leading-5',
                   'ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
                   active
                     ? 'bg-white text-blue-700 shadow'
-                    : 'text-blue-100 hover:bg-white/[0.12] hover:text-white',
+                    : 'bg-slate-600 text-blue-100 hover:bg-blue-500/30 hover:text-white',
                 ]"
               >
                 <!-- <CheckIcon v-show="checked" /> -->
@@ -168,10 +169,4 @@ watch(test_value, () => {
   </div>
 </template>
 
-<style scoped lang="less">
-.tsd {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  column-gap: 20px;
-}
-</style>
+<style scoped lang="less"></style>

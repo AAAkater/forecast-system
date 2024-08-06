@@ -18,7 +18,12 @@ import Tables from "./components/tables.vue"
       <Tables />
     </div>
     <!-- 选项 -->
-    <div :class="['flex w-full items-center justify-center p-6', 'xl:w-[30%]']">
+    <div
+      :class="[
+        'flex w-full items-start justify-center p-0',
+        'xl:w-[30%] xl:items-center xl:p-6',
+      ]"
+    >
       <!-- <Options /> -->
       <NewOptions />
     </div>

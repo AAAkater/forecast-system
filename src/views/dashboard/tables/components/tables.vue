@@ -27,7 +27,7 @@ const tables = ref([
     <div>
       <!-- 时间选择 -->
       <div
-        class="my-5 flex h-40 w-full items-center justify-center rounded-lg bg-[#142850] bg-opacity-75 p-2"
+        class="my-5 flex h-40 w-full items-center justify-center rounded-lg bg-[#0f1325] bg-opacity-75 p-2"
       >
         <SelectTime />
       </div>
@@ -35,7 +35,7 @@ const tables = ref([
       <div
         v-for="(table, index) of tables"
         :key="index"
-        class="my-4 w-full rounded-xl bg-[#142850] bg-opacity-75"
+        class="my-4 w-full rounded-xl bg-[#0f1325] bg-opacity-75"
       >
         <div class="flex h-16 w-full items-center text-lg">
           <div
