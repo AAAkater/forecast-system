@@ -72,7 +72,7 @@ watch(test_value, () => {
 <template>
   <div class="w-full xl:max-w-md">
     <TabGroup :default-index="1">
-      <TabList class="flex space-x-1 rounded-xl bg-blue-400/50 p-1">
+      <TabList class="BG flex space-x-1 rounded-xl p-1">
         <Tab
           v-for="(tab, idx) of tabs"
           as="template"
@@ -85,7 +85,7 @@ watch(test_value, () => {
               'ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
               selected
                 ? 'bg-white text-blue-700 shadow'
-                : 'text-blue-100 hover:bg-blue-500/30 hover:text-white',
+                : 'text-black hover:bg-red-600/20 hover:text-white',
             ]"
           >
             <SvgIcon
@@ -121,7 +121,7 @@ watch(test_value, () => {
                   'ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
                   active
                     ? 'bg-white text-blue-700 shadow'
-                    : 'bg-slate-600 text-blue-100 hover:bg-blue-500/30 hover:text-white',
+                    : 'bg-blue-400/20 text-blue-100 hover:bg-blue-500 hover:text-white',
                 ]"
               >
                 <!-- <CheckIcon v-show="checked" /> -->
@@ -155,7 +155,7 @@ watch(test_value, () => {
                   'ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
                   active
                     ? 'bg-white text-blue-700 shadow'
-                    : 'bg-slate-600 text-blue-100 hover:bg-blue-500/30 hover:text-white',
+                    : 'bg-blue-400/20 text-blue-100 hover:bg-blue-500 hover:text-white',
                 ]"
               >
                 <!-- <CheckIcon v-show="checked" /> -->
@@ -169,4 +169,8 @@ watch(test_value, () => {
   </div>
 </template>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+.BG {
+  background: linear-gradient(220.55deg, #7cf7ff 0%, #4b73ff 100%);
+}
+</style>
