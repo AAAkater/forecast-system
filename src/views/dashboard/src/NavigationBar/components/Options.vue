@@ -1,20 +1,35 @@
 <script setup lang="ts">
+import LockoutSvg from "@/assets/icons/LockOut.svg"
+import LogoutSvg from "@/assets/icons/LoginOut.svg"
 import screenfull from "screenfull"
 import { ref } from "vue"
 import { useRouter } from "vue-router"
+
 const router = useRouter()
-const logout = () => {
-  router.push("/login")
-}
-const lockout = () => {
-  router.push("/lock")
-}
+// 管理员选项
+const options = ref([
+  {
+    name: "锁屏",
+    icon: LockoutSvg,
+    click: () => {
+      router.push("/lock")
+    },
+  },
+  {
+    name: "登出",
+    icon: LogoutSvg,
+    click: () => {
+      router.push("/login")
+    },
+  },
+])
 // 全屏
 const isFull = ref(false)
 const expandOut = () => {
   if (isFull.value) {
     screenfull.exit()
     isFull.value = false
+    return
   }
   screenfull.request()
   isFull.value = true
@@ -43,30 +58,19 @@ const expandOut = () => {
         <template #content>
           <div class="flex flex-col">
             <a-button
-              @click="lockout"
+              v-for="(option, index) of options"
+              :key="index"
+              @click="option.click"
               size="large"
               class="flex w-24"
             >
-              <SvgIcon
-                name="LockOut"
+              <img
+                :src="option.icon"
                 class="h-6 w-6"
               />
-              <span class="ml-2 flex h-6 w-10 items-center justify-center"
-                >锁屏</span
-              >
-            </a-button>
-            <a-button
-              @click="logout"
-              size="large"
-              class="flex w-24"
-            >
-              <SvgIcon
-                name="LoginOut"
-                class="h-6 w-6"
-              />
-              <span class="ml-2 flex h-6 w-10 items-center justify-center"
-                >登出</span
-              >
+              <span class="ml-2 flex h-6 w-10 items-center justify-center">
+                {{ option.name }}
+              </span>
             </a-button>
           </div>
         </template>
@@ -74,8 +78,8 @@ const expandOut = () => {
           size="large"
           class="flex w-24"
         >
-          <SvgIcon
-            name="admin"
+          <img
+            src="@/assets/icons/admin.svg"
             class="h-6 w-6"
           />
           <span class="ml-2 flex h-6 w-10 items-center justify-center">
