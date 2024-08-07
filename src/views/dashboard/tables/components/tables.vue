@@ -22,12 +22,18 @@ const tables = ref([
 </script>
 
 <template>
-  <div class="mt-72 bg-transparent">
-    <div class="h-12">监测评估 - 大运会赛区 - 风速评分</div>
+  <div class="mt-64 bg-transparent">
+    <div class="flex h-auto w-full items-center justify-center">
+      <div
+        class="h-full w-[500px] rounded-2xl border-4 border-blue-400/60 text-center font-sans text-2xl"
+      >
+        监测评估 - 大运会赛区 - 风速评分
+      </div>
+    </div>
     <div>
       <!-- 时间选择 -->
       <div
-        class="my-5 flex h-40 w-full items-center justify-center rounded-lg bg-[#0f1325] bg-opacity-75 p-2"
+        class="my-5 flex h-40 w-full items-center justify-center rounded-lg border-4 border-blue-950 bg-[#0f1325] p-2"
       >
         <SelectTime />
       </div>
@@ -35,19 +41,21 @@ const tables = ref([
       <div
         v-for="(table, index) of tables"
         :key="index"
-        class="my-4 w-full rounded-xl bg-[#0f1325] bg-opacity-75"
+        class="my-4 w-full rounded-xl border-4 border-blue-950 bg-[#0f1325] bg-opacity-75"
       >
-        <div class="flex h-16 w-full items-center text-lg">
-          <div
-            class="h-10 w-4/5 bg-[url('@/assets/table_title_bg.png')] bg-cover bg-no-repeat"
-          >
-            {{ table.title }}
-          </div>
+        <div
+          :class="[
+            'h-10 w-full pl-10 pt-2 font-sans text-lg',
+            `bg-[url('@/assets/card_bg.png')] bg-left bg-no-repeat`,
+          ]"
+        >
+          {{ table.title }}
         </div>
         <div class="h-auto w-full p-12">
-          <div class="rounded-xl bg-[#142850] bg-opacity-75 p-5">
-            <component :is="table.component" />
-          </div>
+          <component
+            :is="table.component"
+            class="rounded-xl bg-blue-700/20 p-5"
+          />
         </div>
       </div>
     </div>

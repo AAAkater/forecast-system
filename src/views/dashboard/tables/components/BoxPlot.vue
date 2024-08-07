@@ -71,6 +71,9 @@ const options = ref({
   title: {
     text: "各个误差值的箱需图",
     align: "left",
+    style: {
+      color: "#fff",
+    },
   },
   xaxis: {
     type: "datetime",
@@ -83,6 +86,12 @@ const options = ref({
   tooltip: {
     shared: false,
     intersect: true,
+    theme: "dark",
+  },
+  legend: {
+    labels: {
+      colors: ["#fff", "#fff"],
+    },
   },
 })
 </script>
@@ -94,7 +103,6 @@ const options = ref({
     width="100%"
     type="boxPlot"
     :series="series"
-    class=" text-black"
   />
 </template>
 
