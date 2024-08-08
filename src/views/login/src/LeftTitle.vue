@@ -6,7 +6,7 @@
       'bg-[rgba(18,115,235)]/70',
     ]"
   >
-    <div class="w-3/4">
+    <div class="w-[70%]">
       <div
         class="text-6xl font-bold leading-relaxed tracking-widest text-white"
       >
