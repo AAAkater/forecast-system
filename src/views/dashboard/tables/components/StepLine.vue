@@ -53,6 +53,9 @@ const options = {
   title: {
     text: "风速评分",
     align: "left",
+    style: {
+      color: "#fff",
+    },
   },
   markers: {
     size: 0,
@@ -100,6 +103,7 @@ const options = {
         },
       },
     ],
+    theme: "dark",
   },
   grid: {
     borderColor: "#e0e6ed",
@@ -121,6 +125,11 @@ const options = {
       left: 0,
     },
   },
+  legend: {
+    labels: {
+      colors: ["#fff", "#fff", "#fff", "#fff", "#fff"],
+    },
+  },
 }
 </script>
 
@@ -131,7 +140,6 @@ const options = {
     width="100%"
     type="line"
     :series="series"
-    class="text-black"
   />
 </template>
 

@@ -5,7 +5,10 @@ import SideBar from "./src/SideBar/index.vue"
 
 <template>
   <div
-    class="flex h-screen w-full justify-end bg-[url('@/assets/bg.png')] bg-cover bg-fixed bg-no-repeat"
+    :class="[
+      'flex h-screen w-full justify-end',
+      `bg-[url('@/assets/pageBg.png')] bg-cover bg-fixed bg-no-repeat`,
+    ]"
   >
     <navigation-bar />
     <side-bar />

@@ -126,6 +126,9 @@ const options = ref({
   title: {
     text: "时效温度散点回归图",
     align: "left",
+    style: {
+      color: "#fff",
+    },
   },
   xaxis: {
     tickAmount: 10,
@@ -138,6 +141,14 @@ const options = ref({
   yaxis: {
     tickAmount: 7,
   },
+  tooltip: {
+    theme: "dark",
+  },
+  legend: {
+    labels: {
+      colors: ["#fff", "#fff", "#fff"],
+    },
+  },
 })
 </script>
 
@@ -148,7 +159,6 @@ const options = ref({
     width="100%"
     type="scatter"
     :series="series"
-    class="text-black"
   />
 </template>
 
