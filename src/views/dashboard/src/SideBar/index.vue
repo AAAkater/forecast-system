@@ -66,7 +66,9 @@ onMounted(() => {
     leave-from="translate-x-0"
     leave-to="-translate-x-full"
   >
-    <aside class="fixed left-0 flex h-full w-28 items-center justify-center">
+    <aside
+      class="fixed left-0 z-10 flex h-full w-28 items-center justify-center"
+    >
       <Menu>
         <MenuItems :static="true">
           <MenuItem
