@@ -1,37 +1,10 @@
-import * as d3 from "d3"
 import * as THREE from "three"
 import { Line2 } from "three/examples/jsm/lines/Line2.js"
 import { LineGeometry } from "three/examples/jsm/lines/LineGeometry.js"
 import { LineMaterial } from "three/examples/jsm/lines/LineMaterial.js"
 import { CSS2DObject } from "three/examples/jsm/renderers/CSS2DRenderer.js"
-
-import * as ChinaJson from "@/assets/China.json"
-import type {
-  ExtendObject3D,
-  GeometryCoordinates,
-  GeometryType,
-} from "../typed"
-import { mapConfig } from "./mapConfig"
-export function getDynamicMapScale(
-  mapObject3D: THREE.Object3D,
-  containerRef: any,
-) {
-  // const width = containerRef.offsetWidth;
-  // const height = containerRef.offsetHeight;
-  const width = containerRef.clientWidth
-  const height = containerRef.clientHeight
-  const refArea = width * height
-
-  const boundingBox = new THREE.Box3().setFromObject(mapObject3D)
-  // 获取包围盒的尺寸
-  const size = new THREE.Vector3()
-  boundingBox.getSize(size)
-  // 新增 Math.random避免缩放为1，没有动画效果
-  const scale =
-    Math.round(Math.sqrt(refArea / (size.x * size.y * 400))) +
-    parseFloat((Math.random() + 0.5).toFixed(2))
-  return scale
-}
+import { mapConfig } from "./map/mapConfig"
+import type { LabelData } from "./typed"
 
 // 绘制挤出的材质
 export function drawExtrudeMesh(
@@ -55,9 +28,9 @@ export function drawExtrudeMesh(
     bevelEnabled: false, // 对挤出的形状应用是否斜角
   })
 
-  const material = new THREE.MeshPhongMaterial({
+  const material = new THREE.MeshBasicMaterial({
     // color: mapConfig.mapColor,
-    color: mapConfig.mapColorGradient[Math.floor(Math.random() * 4)], // 随机颜色
+    color: mapConfig.mapColorGradient[Math.floor(Math.random() * 4)],
     transparent: mapConfig.mapTransparent,
     opacity: mapConfig.mapOpacity,
   })
@@ -109,80 +82,46 @@ export function drawExtrudeMesh(
 
   return { mesh, line }
 }
+// 地图缩放
+export function getDynamicMapScale(
+  mapObject3D: THREE.Object3D,
+  containerRef: HTMLElement,
+) {
+  const width = containerRef.clientWidth
+  const height = containerRef.clientHeight
+  const refArea = width * height
 
-// 生成地图3D模型
-export function generateMapObject3D() {
-  // 地图对象
-  const mapObject3D = new THREE.Object3D()
-  // 地图数据
-  const { features: basicFeatures } = ChinaJson
-
-  const projectionFn = d3
-    .geoMercator()
-    .center([104.0, 37.5])
-    .scale(40)
-    .translate([0, 0])
-
-  const label2dData: any = [] // 存储自定义 2d 标签数据
-
-  // 每个省的数据
-  basicFeatures.forEach((basicFeatureItem: any) => {
-    // 每个省份的地图对象
-    const provinceMapObject3D = new THREE.Object3D() as ExtendObject3D
-    // 将地图数据挂在到模型数据上
-    provinceMapObject3D.customProperties = basicFeatureItem.properties
-
-    // 每个坐标类型
-    const featureType = basicFeatureItem.geometry.type
-    // 每个坐标数组
-    const featureCoords: GeometryCoordinates<GeometryType> =
-      basicFeatureItem.geometry.coordinates
-    // 每个中心点位置
-    const featureCenterCoord: any =
-      basicFeatureItem.properties.centroid &&
-      projectionFn(basicFeatureItem.properties.centroid)
-    // 名字
-    const featureName: string = basicFeatureItem.properties.name
-
-    if (featureCenterCoord) {
-      label2dData.push({
-        featureCenterCoord,
-        featureName,
-      })
-    }
-
-    // MultiPolygon 类型
-    if (featureType === "MultiPolygon") {
-      featureCoords.forEach((multiPolygon: [number, number][][]) => {
-        multiPolygon.forEach((polygon: [number, number][]) => {
-          const { mesh, line } = drawExtrudeMesh(polygon, projectionFn)
-          provinceMapObject3D.add(mesh)
-          provinceMapObject3D.add(line)
-        })
-      })
-    }
-
-    // Polygon 类型
-    if (featureType === "Polygon") {
-      featureCoords.forEach((polygon: [number, number][]) => {
-        const { mesh, line } = drawExtrudeMesh(polygon, projectionFn)
-        provinceMapObject3D.add(mesh)
-        provinceMapObject3D.add(line)
-      })
-    }
-
-    mapObject3D.add(provinceMapObject3D)
-  })
-
-  return { mapObject3D, label2dData }
+  const boundingBox = new THREE.Box3().setFromObject(mapObject3D)
+  // 获取包围盒的尺寸
+  const size = new THREE.Vector3()
+  boundingBox.getSize(size)
+  // 新增 Math.random避免缩放为1，没有动画效果
+  const scale =
+    Math.round(Math.sqrt(refArea / (size.x * size.y * 400))) +
+    parseFloat((Math.random() + 0.5).toFixed(2))
+  return scale
 }
 
-// 生成地图2D标签
-export function generateMapLabel2D(label2dData: any) {
+function draw2dLabel(coord: [number, number], provinceName: string) {
+  if (coord && coord.length) {
+    // 模版字符串
+    const innerHTML = `<div style="color: #fff">${provinceName}</div>`
+    const labelDiv = document.createElement("div")
+    labelDiv.innerHTML = innerHTML
+    labelDiv.style.pointerEvents = "none" // 禁用事件
+    // console.log(provinceName)
+    const labelObject = new CSS2DObject(labelDiv)
+    labelObject.position.set(coord[0], -coord[1], mapConfig.label2dZIndex)
+    return labelObject
+  }
+}
+
+export function generateMapLabel2D(labelData: any) {
   const labelObject2D = new THREE.Object3D()
-  label2dData.forEach((item: any) => {
-    const { featureCenterCoord, featureName } = item
-    const labelObjectItem = draw2dLabel(featureCenterCoord, featureName)
+  labelData.forEach((label: LabelData) => {
+    // const { featureCenterCoord, cityName } = label
+    // console.log(label)
+    const labelObjectItem = draw2dLabel(label.centerCoord, label.provinceName)
     if (labelObjectItem) {
       labelObject2D.add(labelObjectItem)
     }
@@ -190,35 +129,22 @@ export function generateMapLabel2D(label2dData: any) {
   return labelObject2D
 }
 
-// 生成地图spot点位
-export function generateMapSpot(label2dData: any) {
+export function generateMapSpot(labels: LabelData[]) {
   const spotObject3D = new THREE.Object3D()
   const spotList: any = []
-  label2dData.forEach((item: any) => {
-    const { featureCenterCoord } = item
-    const spotObjectItem = drawSpot(featureCenterCoord)
+  labels.forEach((label: LabelData) => {
+    // const { featureCenterCoord } = label
+    const spotObjectItem = drawSpot(label.centerCoord)
     if (spotObjectItem && spotObjectItem.circle && spotObjectItem.ring) {
       spotObject3D.add(spotObjectItem.circle)
       spotObject3D.add(spotObjectItem.ring)
       spotList.push(spotObjectItem.ring)
     }
   })
-  return { spotObject3D, spotList }
+  return spotList
 }
 
 // 绘制二维标签
-export const draw2dLabel = (coord: [number, number], proviceName: string) => {
-  if (coord && coord.length) {
-    // 模版字符串
-    const innerHTML = `<div class="your-classname" style="color: #fff">${proviceName}</div>`
-    const labelDiv = document.createElement("div")
-    labelDiv.innerHTML = innerHTML
-    labelDiv.style.pointerEvents = "none" // 禁用事件
-    const labelObject = new CSS2DObject(labelDiv)
-    labelObject.position.set(coord[0], -coord[1], mapConfig.label2dZIndex)
-    return labelObject
-  }
-}
 
 // 绘制圆点
 export const drawSpot = (coord: [number, number]) => {
@@ -247,9 +173,7 @@ export const drawSpot = (coord: [number, number]) => {
   }
 }
 
-/**
- * 线上移动物体
- */
+//线上移动物体
 export const drawflySpot = (curve: any) => {
   const aGeo = new THREE.SphereGeometry(0.2)
   const aMater = new THREE.MeshBasicMaterial({

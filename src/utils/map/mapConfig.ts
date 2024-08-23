@@ -1,4 +1,4 @@
-const Depth = 6;
+const Depth = 6
 
 export const mapConfig = {
   // 地图挤出厚度
@@ -22,4 +22,4 @@ export const mapConfig = {
   label2dZIndex: Depth + 2,
   // spot
   spotZIndex: Depth + 0.2,
-};
+}
