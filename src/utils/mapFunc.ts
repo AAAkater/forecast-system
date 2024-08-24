@@ -3,10 +3,10 @@ import { Line2 } from "three/examples/jsm/lines/Line2.js"
 import { LineGeometry } from "three/examples/jsm/lines/LineGeometry.js"
 import { LineMaterial } from "three/examples/jsm/lines/LineMaterial.js"
 import { CSS2DObject } from "three/examples/jsm/renderers/CSS2DRenderer.js"
-import { mapConfig } from "./map/mapConfig"
-import type { LabelData } from "./typed"
+import { mapConfig } from "./mapConfig"
+import type { LabelDataObject } from "./typed"
 
-// 绘制挤出的材质
+// 绘制材质
 export function drawExtrudeMesh(
   point: [number, number][],
   projectionFn: any,
@@ -29,8 +29,8 @@ export function drawExtrudeMesh(
   })
 
   const material = new THREE.MeshBasicMaterial({
-    // color: mapConfig.mapColor,
-    color: mapConfig.mapColorGradient[Math.floor(Math.random() * 4)],
+    color: mapConfig.mapColor,
+    // color: mapConfig.mapColorGradient[Math.floor(Math.random() * 4)],
     transparent: mapConfig.mapTransparent,
     opacity: mapConfig.mapOpacity,
   })
@@ -116,35 +116,16 @@ function draw2dLabel(coord: [number, number], provinceName: string) {
   }
 }
 
-export function generateMapLabel2D(labelData: any) {
+export function generateMapLabel2D(labelData: LabelDataObject) {
   const labelObject2D = new THREE.Object3D()
-  labelData.forEach((label: LabelData) => {
-    // const { featureCenterCoord, cityName } = label
-    // console.log(label)
-    const labelObjectItem = draw2dLabel(label.centerCoord, label.provinceName)
+  Object.entries(labelData).forEach(([provinceName, centerCoord]) => {
+    const labelObjectItem = draw2dLabel(centerCoord, provinceName)
     if (labelObjectItem) {
       labelObject2D.add(labelObjectItem)
     }
   })
   return labelObject2D
 }
-
-export function generateMapSpot(labels: LabelData[]) {
-  const spotObject3D = new THREE.Object3D()
-  const spotList: any = []
-  labels.forEach((label: LabelData) => {
-    // const { featureCenterCoord } = label
-    const spotObjectItem = drawSpot(label.centerCoord)
-    if (spotObjectItem && spotObjectItem.circle && spotObjectItem.ring) {
-      spotObject3D.add(spotObjectItem.circle)
-      spotObject3D.add(spotObjectItem.ring)
-      spotList.push(spotObjectItem.ring)
-    }
-  })
-  return spotList
-}
-
-// 绘制二维标签
 
 // 绘制圆点
 export const drawSpot = (coord: [number, number]) => {
@@ -174,7 +155,7 @@ export const drawSpot = (coord: [number, number]) => {
 }
 
 //线上移动物体
-export const drawflySpot = (curve: any) => {
+export const drawFlySpot = (curve: any) => {
   const aGeo = new THREE.SphereGeometry(0.2)
   const aMater = new THREE.MeshBasicMaterial({
     color: "#77f077",
@@ -201,7 +182,7 @@ export const drawLineBetween2Spot = (
     new THREE.Vector3(x1, -y1, z1),
   )
 
-  const flySpot = drawflySpot(curve)
+  const flySpot = drawFlySpot(curve)
 
   const lineGeometry = new THREE.BufferGeometry()
   // 获取曲线上50个点

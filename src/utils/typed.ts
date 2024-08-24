@@ -59,7 +59,6 @@ export interface ExtendObject3D extends Object3D {
   customProperties: any // 扩展的自定义属性
 }
 
-export interface LabelData {
-  centerCoord: [number, number]
-  provinceName: string
+export type LabelDataObject = {
+  [provinceName: string]: [number, number]
 }

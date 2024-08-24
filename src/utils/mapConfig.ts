@@ -7,7 +7,7 @@ export const mapConfig = {
   mapTransparent: true,
   mapOpacity: 0.9,
   // 地图颜色
-  mapColor: "#06092A", // 地图原本颜色
+  mapColor: "#0B388A", // 地图原本颜色
   mapHoverColor: "#409EF9", // 地图hover颜色
   // 地图人数渐变
   mapColorGradient: ["#42A0F9", "#1E6BF8", "#0B388A", "#132354"],

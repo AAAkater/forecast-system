@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import ListBox from "./src/ListBox.vue"
-// import chengdu from "./src/maps/chengdu.vue"
-import test from "./src/maps/test.vue"
+import ChinaMap from "./src/maps/index.vue"
 </script>
 
 <template>
   <div class="flex h-screen w-full items-center justify-center">
-    <!-- <chengdu /> -->
-    <test />
+    <ChinaMap />
     <ListBox />
   </div>
 </template>

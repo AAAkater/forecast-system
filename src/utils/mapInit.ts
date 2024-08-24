@@ -4,10 +4,9 @@ import gsap from "gsap"
 import * as THREE from "three"
 import { CSS2DRenderer } from "three/examples/jsm/renderers/CSS2DRenderer.js"
 import type {
-  ExtendObject3D,
   GeometryCoordinates,
   GeometryType,
-  LabelData,
+  LabelDataObject,
 } from "./typed"
 
 import {
@@ -20,7 +19,7 @@ import {
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js"
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js"
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js"
-import { mapConfig } from "./map/mapConfig"
+import { mapConfig } from "./mapConfig"
 
 export class Map {
   scene
@@ -32,7 +31,7 @@ export class Map {
   labelDom: HTMLElement
   renderer: THREE.WebGLRenderer
   ChinaMap: THREE.Object3D
-  labelData: LabelData[]
+  labelData: LabelDataObject = {}
   spotList: any
   flySpotList: any = []
 
@@ -82,7 +81,7 @@ export class Map {
     //标签
     this.labelData = this.initLabel(projectionFn)
     //绘制点位
-    this.spotList = this.initSpot(this.labelData)
+    this.spotList = this.initSpot()
     // Models
     this.initModels()
     // 绘制连线
@@ -112,6 +111,8 @@ export class Map {
     this.animate()
 
     this.setResize()
+
+    this.setMouseMove()
   }
 
   // 视窗伸缩
@@ -136,7 +137,47 @@ export class Map {
 
     window.addEventListener("resize", e, false)
   }
+  // 鼠标悬浮
+  public setMouseMove() {
+    let lastPick: any = null
+    const event = (e: MouseEvent) => {
+      const intersects = this.raycaster.intersectObjects(this.scene.children)
 
+      this.pointer.x = (e.clientX / this.mapDom.clientWidth) * 2 - 1
+      this.pointer.y = -(e.clientY / this.mapDom.clientHeight) * 2 + 1
+      // 如果存在，则鼠标移出需要重置
+      if (lastPick) {
+        lastPick.object.material[0].color.set(mapConfig.mapColor)
+        lastPick.object.material[0].opacity = mapConfig.mapOpacity // 设置完全不透明
+      }
+      lastPick = null
+      // 优化
+      lastPick = intersects.find(
+        (item: any) => item.object.userData.isChangeColor,
+      )
+
+      if (lastPick) {
+        if (lastPick.object.material[0]) {
+          lastPick.object.material[0].color.set(mapConfig.mapHoverColor)
+          lastPick.object.material[0].opacity = 1 // 设置完全不透明
+        }
+
+        const properties = lastPick.object.parent.customProperties
+        //   if (toolTipRef.current && toolTipRef.current.style) {
+        //     toolTipRef.current.style.left = e.clientX + 2 + "px";
+        //     toolTipRef.current.style.top = e.clientY + 2 + "px";
+        //     toolTipRef.current.style.visibility = "visible";
+        //   }
+        //   setToolTipData({
+        //     text: properties.name,
+        //   });
+        // } else {
+        //   toolTipRef.current.style.visibility = "hidden";
+        // }
+      }
+    }
+    window.addEventListener("mousemove", event, false)
+  }
   private initMap3D(projectionFn: d3.GeoProjection): THREE.Object3D {
     // 大地图对象
     const ChinaMap = new THREE.Object3D()
@@ -146,9 +187,7 @@ export class Map {
     // 遍历所有省
     provinces.forEach((province) => {
       // 省份模型
-      const provinceMap = new THREE.Object3D() as ExtendObject3D
-      // 将地图数据挂在到模型数据上
-      provinceMap.customProperties = province.properties
+      const provinceMap = new THREE.Object3D()
       // 省份坐标
       const provinceCoords: GeometryCoordinates<GeometryType> =
         province.geometry.coordinates
@@ -183,7 +222,7 @@ export class Map {
     // 省份数据
     const provinces = ChinaJson.features
     // 省份标签
-    const labelData: LabelData[] = []
+    const labelData: LabelDataObject = {}
 
     for (const province of provinces) {
       const provinceFeature = province.properties
@@ -196,13 +235,9 @@ export class Map {
         provinceFeature.centroid as [number, number],
       ) as [number, number]
       // 省会城市名
-      const cityName: string = provinceFeature.name
+      const provinceName: string = provinceFeature.name
       // console.log(cityName, provinceCenterCoord)
-
-      labelData.push({
-        centerCoord: provinceCenterCoord,
-        provinceName: cityName,
-      })
+      labelData[provinceName] = provinceCenterCoord
     }
     const labelObject2D = generateMapLabel2D(labelData)
     this.ChinaMap.add(labelObject2D)
@@ -217,8 +252,7 @@ export class Map {
     dracoLoader.setDecoderPath("/draco/")
     loader.setDRACOLoader(dracoLoader)
     loader.load("/models/cone.glb", (glb: any) => {
-      this.labelData.forEach((label: LabelData) => {
-        const featureCenterCoord = label.centerCoord
+      Object.entries(this.labelData).forEach(([provinceName, centerCoord]) => {
         const clonedModel = glb.scene.clone()
         const mixer = new THREE.AnimationMixer(clonedModel)
         const clonedAnimations = glb.animations.map((clip: any) => {
@@ -231,23 +265,46 @@ export class Map {
         modelMixer.push(mixer)
         // 设置模型位置
         clonedModel.position.set(
-          featureCenterCoord[0],
-          -featureCenterCoord[1],
+          centerCoord[0],
+          -centerCoord[1],
           mapConfig.spotZIndex,
         )
         // 设置模型大小
         clonedModel.scale.set(0.3, 0.3, 0.6)
         modelObject3D.add(clonedModel)
       })
+
+      // this.labelData.forEach((label: LabelDataObject) => {
+      //   const featureCenterCoord = label.centerCoord
+      //   const clonedModel = glb.scene.clone()
+      //   const mixer = new THREE.AnimationMixer(clonedModel)
+      //   const clonedAnimations = glb.animations.map((clip: any) => {
+      //     return clip.clone()
+      //   })
+      //   clonedAnimations.forEach((clip: any) => {
+      //     mixer.clipAction(clip).play()
+      //   })
+      //   // 添加每个model的mixer
+      //   modelMixer.push(mixer)
+      //   // 设置模型位置
+      //   clonedModel.position.set(
+      //     featureCenterCoord[0],
+      //     -featureCenterCoord[1],
+      //     mapConfig.spotZIndex,
+      //   )
+      //   // 设置模型大小
+      //   clonedModel.scale.set(0.3, 0.3, 0.6)
+      //   modelObject3D.add(clonedModel)
+      // })
       this.ChinaMap.add(modelObject3D)
     })
   }
 
-  private initSpot(labels: LabelData[]) {
+  private initSpot() {
     const spotObject3D = new THREE.Object3D()
     const spotList: any = []
-    labels.forEach((label: LabelData) => {
-      const spotObjectItem = drawSpot(label.centerCoord)
+    Object.entries(this.labelData).forEach(([provinceName, centerCoord]) => {
+      const spotObjectItem = drawSpot(centerCoord)
       if (spotObjectItem && spotObjectItem.circle && spotObjectItem.ring) {
         spotObject3D.add(spotObjectItem.circle)
         spotObject3D.add(spotObjectItem.ring)
@@ -258,26 +315,24 @@ export class Map {
     return spotList
   }
   private initLine(MAX_LINE_COUNT: number = 5) {
-    // 随机生成5组线
-    let connectLine: any[] = []
-    for (let count = 0; count < MAX_LINE_COUNT; count++) {
-      const midIndex = Math.floor(this.labelData.length / 2)
-      const indexStart = Math.floor(Math.random() * midIndex)
-      const indexEnd = Math.floor(Math.random() * midIndex) + midIndex - 1
-      connectLine.push({
-        indexStart,
-        indexEnd,
-      })
-    }
+    const endNames = [
+      "新疆维吾尔自治区",
+      "青海省",
+      "云南省",
+      "贵州省",
+      "重庆市",
+      "海南省",
+      "江苏省",
+      "北京市",
+      "山东省",
+    ]
 
     //绘制飞行的点
     const flyObject3D = new THREE.Object3D()
-    // const flySpotList: any = []
-    connectLine.forEach((item: any) => {
-      const { indexStart, indexEnd } = item
+    endNames.forEach((endName: string) => {
       const { flyLine, flySpot } = drawLineBetween2Spot(
-        this.labelData[indexStart].centerCoord,
-        this.labelData[indexEnd].centerCoord,
+        this.labelData["四川省"],
+        this.labelData[endName],
       )
       flyObject3D.add(flyLine)
       flyObject3D.add(flySpot)
