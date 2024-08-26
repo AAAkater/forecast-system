@@ -4,7 +4,7 @@ import ForecastSvg from "@/assets/icons/earth.svg"
 import GraphSvg from "@/assets/icons/graph.svg"
 import HomeSvg from "@/assets/icons/home.svg"
 import MultipleSvg from "@/assets/icons/multiple.svg"
-import { Menu, MenuItem, MenuItems, TransitionRoot } from "@headlessui/vue"
+import { RadioGroup, RadioGroupOption, TransitionRoot } from "@headlessui/vue"
 import { onMounted, ref } from "vue"
 import { useRouter } from "vue-router"
 const router = useRouter()
@@ -46,6 +46,27 @@ const items = ref([
   },
 ])
 
+const selected = ref(items.value[0])
+// onMounted(() => {
+//   // console.log(to.fullPath)
+//   switch (router.currentRoute.value.fullPath) {
+//     case "/dashboard/home":
+//       selected.value = items.value[0]
+//       break
+//     case "/dashboard/device":
+//       selected.value = items.value[1]
+//       break
+//     case "/dashboard/multiple":
+//       selected.value = items.value[2]
+//       break
+//     case "/dashboard/forecast":
+//       selected.value = items.value[3]
+//       break
+//     case "/dashboard/tables":
+//       selected.value = items.value[4]
+//       break
+//   }
+// })
 const isVisible = ref(false)
 onMounted(() => {
   setTimeout(() => {
@@ -66,37 +87,39 @@ onMounted(() => {
     leave-from="translate-x-0"
     leave-to="-translate-x-full"
   >
-    <aside class="fixed left-0 flex h-full w-28 items-center justify-center">
-      <Menu>
-        <MenuItems :static="true">
-          <MenuItem
-            v-for="(item, index) of items"
-            :key="index"
-            v-slot="{ active }"
-            class="hover: mx-0 my-8 flex h-20 w-20 justify-center rounded-md"
+    <aside class="fixed left-2 flex h-full items-center justify-center">
+      <RadioGroup
+        v-model="selected"
+        class="rounded-2xl border-4 border-blue-400/60 bg-blue-400/20 p-2"
+      >
+        <RadioGroupOption
+          as="template"
+          v-for="(item, idx) in items"
+          :key="idx"
+          :value="item.title"
+          v-slot="{ active, checked }"
+          class="my-8 flex h-20 w-20 justify-center rounded-md"
+        >
+          <div
+            @click="item.click"
+            :class="[
+              checked ? 'bg-blue-400' : '',
+              active ? '' : 'hover:bg-blue-500/20',
+              'w-full p-1 shadow-lg',
+            ]"
           >
-            <div
-              @click="item.click"
-              class="mt-2 w-full p-1 text-center text-white shadow-lg"
-              :class="{ 'bg-blue-700/[0.5]': active }"
-            >
-              <div>
-                <!-- <SvgIcon
-                  :name="item.icon"
-                  class="mx-auto h-10 w-10"
-                /> -->
-                <img
-                  :src="item.icon"
-                  class="mx-auto h-10 w-10"
-                />
-                <div class="mt-2 w-full text-center text-base text-white">
-                  {{ item.title }}
-                </div>
+            <div>
+              <img
+                :src="item.icon"
+                :class="['mx-auto h-10 w-10']"
+              />
+              <div class="mt-2 w-full text-center text-base text-white">
+                {{ item.title }}
               </div>
             </div>
-          </MenuItem>
-        </MenuItems>
-      </Menu>
+          </div>
+        </RadioGroupOption>
+      </RadioGroup>
     </aside>
   </TransitionRoot>
 </template>
