@@ -87,7 +87,7 @@ onMounted(() => {
     leave-from="translate-x-0"
     leave-to="-translate-x-full"
   >
-    <aside class="fixed left-2 flex h-full items-center justify-center">
+    <aside class="fixed left-8 flex h-full items-center justify-center">
       <RadioGroup
         v-model="selected"
         class="rounded-2xl border-4 border-blue-400/60 bg-blue-400/20 p-2"
@@ -103,8 +103,8 @@ onMounted(() => {
           <div
             @click="item.click"
             :class="[
-              checked ? 'bg-blue-400' : '',
-              active ? '' : 'hover:bg-blue-500/20',
+              checked ? 'bg-blue-400' : 'bg-blue-500/20',
+              active ? '' : 'hover:bg-emerald-200/15',
               'w-full p-1 shadow-lg',
             ]"
           >
