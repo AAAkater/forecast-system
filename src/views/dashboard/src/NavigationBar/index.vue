@@ -57,7 +57,7 @@ onMounted(() => {
     leave-to="-translate-y-full"
   >
     <header
-      class="fixed mb-5 h-32 w-full bg-[url('@/assets/head_bg.png')] bg-cover bg-top bg-no-repeat text-white"
+      class="fixed z-10 mb-5 h-32 w-full bg-[url('@/assets/head_bg.png')] bg-cover bg-top bg-no-repeat text-white"
     >
       <div class="flex h-16 justify-between">
         <TimeTable />

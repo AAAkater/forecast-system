@@ -1,15 +1,17 @@
-import { fileURLToPath, URL } from "node:url"
-
-import { defineConfig } from "vite"
+import { templateCompilerOptions } from "@tresjs/core"
 import vue from "@vitejs/plugin-vue"
-import Components from "unplugin-vue-components/vite"
-import { AntDesignVueResolver } from "unplugin-vue-components/resolvers"
-import { createSvgIconsPlugin } from "vite-plugin-svg-icons"
+import { fileURLToPath, URL } from "node:url"
 import path from "path"
+import { AntDesignVueResolver } from "unplugin-vue-components/resolvers"
+import Components from "unplugin-vue-components/vite"
+import { defineConfig } from "vite"
+import { createSvgIconsPlugin } from "vite-plugin-svg-icons"
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    vue(),
+    vue({
+      ...templateCompilerOptions,
+    }),
     Components({
       resolvers: [
         AntDesignVueResolver({
@@ -18,9 +20,7 @@ export default defineConfig({
       ],
     }),
     createSvgIconsPlugin({
-      iconDirs: [
-        path.resolve(process.cwd(), "src/assets/icons"),
-      ],
+      iconDirs: [path.resolve(process.cwd(), "src/assets/icons")],
       symbolId: "icon-[name]",
     }),
   ],

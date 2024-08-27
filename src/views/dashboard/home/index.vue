@@ -1,14 +1,13 @@
 <script setup lang="ts">
-import { message } from "ant-design-vue"
-import { onMounted } from "vue"
-
-onMounted(() => {
-  message.info("主页")
-})
+import ListBox from "./src/ListBox.vue"
+import ChinaMap from "./src/maps/index.vue"
 </script>
 
 <template>
-  <div class="flex h-screen w-full items-center justify-center">home</div>
+  <div class="flex h-screen w-full items-center justify-center">
+    <ChinaMap />
+    <ListBox />
+  </div>
 </template>
 
 <style scoped lang="less"></style>
