@@ -1,14 +1,12 @@
-<script setup lang="ts">
-import { message } from "ant-design-vue"
-import { onMounted } from "vue"
-
-onMounted(() => {
-  message.info("设备")
-})
-</script>
+<script setup lang="ts"></script>
 
 <template>
-  <div class="flex h-screen w-full items-center justify-center">设备</div>
+  <div class="flex h-screen w-full items-center justify-center">
+    <iframe
+      class="h-screen w-full"
+      src="https://lbsyun.baidu.com/jsdemo/demo/webgl0_earch.htm"
+    />
+  </div>
 </template>
 
 <style scoped lang="less"></style>
