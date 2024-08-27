@@ -87,7 +87,7 @@ onMounted(() => {
     leave-from="translate-x-0"
     leave-to="-translate-x-full"
   >
-    <aside class="fixed left-8 flex h-full items-center justify-center">
+    <aside class="fixed left-8 z-10 flex h-full items-center justify-center">
       <RadioGroup
         v-model="selected"
         class="rounded-2xl border-4 border-blue-400/60 bg-blue-400/20 p-2"
