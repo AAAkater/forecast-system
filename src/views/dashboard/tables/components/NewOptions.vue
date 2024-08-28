@@ -81,7 +81,7 @@ watch(test_value, () => {
         >
           <button
             :class="[
-              'flex w-full justify-center rounded-lg py-2.5 text-sm font-medium leading-5',
+              'flex w-full justify-center text-nowrap rounded-lg py-2.5 text-sm font-medium leading-5',
               'ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
               selected
                 ? 'bg-white text-blue-700 shadow'
@@ -90,7 +90,7 @@ watch(test_value, () => {
           >
             <SvgIcon
               :name="tab.icon"
-              class="mr-3 h-5 w-5"
+              class="mr-2 h-5 w-5"
             />
             {{ tab.name }}
           </button>
