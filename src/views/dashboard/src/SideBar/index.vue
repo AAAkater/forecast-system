@@ -90,7 +90,7 @@ onMounted(() => {
     <aside class="fixed left-8 flex h-full items-center justify-center">
       <RadioGroup
         v-model="selected"
-        class="rounded-2xl border-4 border-blue-400/60 bg-blue-400/20 p-2"
+        class="rounded-2xl border-4 border-blue-400/60 bg-blue-400/20 p-1 xl:p-2"
       >
         <RadioGroupOption
           as="template"
@@ -98,7 +98,10 @@ onMounted(() => {
           :key="idx"
           :value="item.title"
           v-slot="{ active, checked }"
-          class="my-8 flex h-20 w-20 justify-center rounded-md"
+          :class="[
+            'my-3 flex justify-center rounded-md',
+            'xl:my-8 xl:h-20 xl:w-20',
+          ]"
         >
           <div
             @click="item.click"
@@ -111,9 +114,11 @@ onMounted(() => {
             <div>
               <img
                 :src="item.icon"
-                :class="['mx-auto h-10 w-10']"
+                :class="['mx-auto xl:h-10 xl:w-10', 'h-5 w-5']"
               />
-              <div class="mt-2 w-full text-center text-base text-white">
+              <div
+                class="mt-2 w-full text-nowrap text-center text-xs text-white xl:text-base"
+              >
                 {{ item.title }}
               </div>
             </div>
