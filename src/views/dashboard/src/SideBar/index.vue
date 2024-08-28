@@ -99,8 +99,8 @@ onMounted(() => {
           :value="item.title"
           v-slot="{ active, checked }"
           :class="[
-            'my-3 flex justify-center rounded-md',
-            'xl:my-8 xl:h-20 xl:w-20',
+            'my-8 flex h-20 w-20 justify-center rounded-md',
+            'sm_option',
           ]"
         >
           <div
@@ -114,10 +114,10 @@ onMounted(() => {
             <div>
               <img
                 :src="item.icon"
-                :class="['mx-auto xl:h-10 xl:w-10', 'h-5 w-5']"
+                :class="['sm_image', 'mx-auto h-10 w-10']"
               />
               <div
-                class="mt-2 w-full text-nowrap text-center text-xs text-white xl:text-base"
+                class="sm_text mt-2 w-full text-nowrap text-center text-base text-white"
               >
                 {{ item.title }}
               </div>
@@ -129,4 +129,21 @@ onMounted(() => {
   </TransitionRoot>
 </template>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+@media not all and (min-width: 1700px) {
+  .sm_option {
+    height: 3.5rem;
+    width: 3.5rem;
+    margin: 0.75rem auto;
+  }
+
+  .sm_image {
+    height: 1.25rem;
+    width: 1.25rem;
+  }
+  .sm_text {
+    font-size: 0.75rem /* 12px */;
+    line-height: 1rem /* 16px */;
+  }
+}
+</style>
