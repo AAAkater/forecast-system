@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {
   RadioGroup,
+  RadioGroupLabel,
   RadioGroupOption,
   Tab,
   TabGroup,
@@ -57,8 +58,8 @@ const test_items = ref([
   { name: "空间分布图" },
 ])
 
-const wind_value = ref("")
-const test_value = ref("")
+const wind_value = ref("1小时平均风")
+const test_value = ref("均方根误差")
 
 watch(wind_value, () => {
   console.log(wind_value.value)
@@ -101,13 +102,17 @@ watch(test_value, () => {
         <TabPanel
           v-for="(tab, idx) of tabs"
           :key="idx"
-          :class="['rounded-xl bg-blue-500/15 p-3']"
+          :class="[
+            'rounded-xl p-4',
+            `bg-[url('@/assets/panel.png')] bg-[length:100%_100%] bg-no-repeat`,
+          ]"
         >
           <!-- 风选项按钮组 -->
           <RadioGroup
             v-model="wind_value"
             class="grid grid-cols-[1fr_1fr] gap-x-4 gap-y-2"
           >
+            <RadioGroupLabel class="sr-only">wind</RadioGroupLabel>
             <RadioGroupOption
               v-for="(item, idx) of wind_items"
               :key="idx"
@@ -119,9 +124,10 @@ watch(test_value, () => {
                 :class="[
                   'flex w-full justify-center rounded-lg py-2.5 text-lg font-medium leading-5',
                   'ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
-                  active
+                  checked
                     ? 'bg-white text-blue-700 shadow'
-                    : 'bg-blue-400/20 text-blue-100 hover:bg-blue-500 hover:text-white',
+                    : 'bg-blue-400/20 text-blue-100',
+                  active ? 'hover:bg-blue-500 hover:text-white' : '',
                 ]"
               >
                 <!-- <CheckIcon v-show="checked" /> -->
@@ -142,6 +148,7 @@ watch(test_value, () => {
             v-model="test_value"
             class="grid grid-cols-[1fr_1fr] gap-x-4 gap-y-2"
           >
+            <RadioGroupLabel class="sr-only">test</RadioGroupLabel>
             <RadioGroupOption
               v-for="(item, idx) of test_items"
               :key="idx"
@@ -153,9 +160,10 @@ watch(test_value, () => {
                 :class="[
                   'flex justify-center rounded-lg py-2.5 text-lg font-medium leading-5',
                   'ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
-                  active
+                  checked
                     ? 'bg-white text-blue-700 shadow'
-                    : 'bg-blue-400/20 text-blue-100 hover:bg-blue-500 hover:text-white',
+                    : 'bg-blue-400/20 text-blue-100',
+                  active ? 'hover:bg-blue-500 hover:text-white' : '',
                 ]"
               >
                 <!-- <CheckIcon v-show="checked" /> -->

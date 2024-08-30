@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import NewOptions from "./components/NewOptions.vue"
-import Tables from "./components/tables.vue"
+import Tables from "./components/LeftTables.vue"
+import Options from "./components/RightOptions.vue"
 </script>
 
 <template>
@@ -23,7 +23,7 @@ import Tables from "./components/tables.vue"
         'xl:w-[30%] xl:items-center xl:p-6',
       ]"
     >
-      <NewOptions />
+      <Options />
     </div>
   </main>
 </template>

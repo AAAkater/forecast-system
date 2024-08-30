@@ -78,7 +78,23 @@ const options = {
       "11",
       "12",
     ],
+    labels: {
+      show: true,
+      style: {
+        colors: "white",
+      },
+    },
   },
+
+  yaxis: {
+    labels: {
+      show: true,
+      style: {
+        colors: "white",
+      },
+    },
+  },
+
   tooltip: {
     y: [
       {
