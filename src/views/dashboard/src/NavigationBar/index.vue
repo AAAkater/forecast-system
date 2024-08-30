@@ -52,7 +52,7 @@ onMounted(() => {
   >
     <header
       :class="[
-        'fixed mb-5 h-40 w-full text-white',
+        'fixed z-10 mb-5 h-40 w-full text-white',
         `bg-[url('@/assets/title.png')] bg-[length:100%_100%] bg-top bg-no-repeat`,
       ]"
     >
