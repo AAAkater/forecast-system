@@ -90,7 +90,7 @@ onMounted(() => {
     <aside class="fixed left-8 z-10 flex h-full items-center justify-center">
       <RadioGroup
         v-model="selected"
-        class="rounded-2xl border-4 border-blue-400/60 bg-blue-400/20 p-2"
+        class="rounded-2xl border-4 border-blue-400/60 bg-blue-400/20 p-1 xl:p-2"
       >
         <RadioGroupOption
           as="template"
@@ -98,7 +98,10 @@ onMounted(() => {
           :key="idx"
           :value="item.title"
           v-slot="{ active, checked }"
-          class="my-8 flex h-20 w-20 justify-center rounded-md"
+          :class="[
+            'my-8 flex h-20 w-20 justify-center rounded-md',
+            'sm_option',
+          ]"
         >
           <div
             @click="item.click"
@@ -111,9 +114,11 @@ onMounted(() => {
             <div>
               <img
                 :src="item.icon"
-                :class="['mx-auto h-10 w-10']"
+                :class="['sm_image', 'mx-auto h-10 w-10']"
               />
-              <div class="mt-2 w-full text-center text-base text-white">
+              <div
+                class="sm_text mt-2 w-full text-nowrap text-center text-base text-white"
+              >
                 {{ item.title }}
               </div>
             </div>
@@ -124,4 +129,21 @@ onMounted(() => {
   </TransitionRoot>
 </template>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+@media not all and (min-width: 1700px) {
+  .sm_option {
+    height: 3.5rem;
+    width: 3.5rem;
+    margin: 0.75rem auto;
+  }
+
+  .sm_image {
+    height: 1.25rem;
+    width: 1.25rem;
+  }
+  .sm_text {
+    font-size: 0.75rem /* 12px */;
+    line-height: 1rem /* 16px */;
+  }
+}
+</style>

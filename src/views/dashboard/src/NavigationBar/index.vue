@@ -1,10 +1,4 @@
 <script setup lang="ts">
-// import {
-//   BankOutlined,
-//   ControlOutlined,
-//   GlobalOutlined,
-//   TeamOutlined,
-// } from "@ant-design/icons-vue"
 import { TransitionRoot } from "@headlessui/vue"
 import { onMounted, ref } from "vue"
 import Options from "./components/Options.vue"
@@ -57,12 +51,15 @@ onMounted(() => {
     leave-to="-translate-y-full"
   >
     <header
-      class="fixed z-10 mb-5 h-32 w-full bg-[url('@/assets/head_bg.png')] bg-cover bg-top bg-no-repeat text-white"
+      :class="[
+        'fixed mb-5 h-40 w-full text-white',
+        `bg-[url('@/assets/title.png')] bg-[length:100%_100%] bg-top bg-no-repeat`,
+      ]"
     >
-      <div class="flex h-16 justify-between">
+      <div :class="['flex h-16 justify-between']">
         <TimeTable />
         <!-- <MiddleTitle /> -->
-        <div class="font-mono text-5xl">多源融合及次百米级临近预报</div>
+        <!-- <div class="font-mono text-5xl">多源融合及次百米级临近预报</div> -->
         <Options />
       </div>
       <div class="flex items-center justify-center">
@@ -74,15 +71,12 @@ onMounted(() => {
           >
             <SvgIcon
               :name="item.icon"
-              class="h-10 w-10"
+              class="mr-2 h-12 w-12"
             />
             <div>
-              <h1>
-                {{ `${item.figures}${item.unit}` }}
-              </h1>
-              <h1>
-                {{ item.title }}
-              </h1>
+              {{ `${item.figures}${item.unit}` }}
+              <br />
+              {{ item.title }}
             </div>
           </li>
         </ul>
