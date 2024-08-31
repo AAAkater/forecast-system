@@ -1,0 +1,130 @@
+<script setup lang="ts">
+// import ocn from '@/assets/icons/checked.svg'
+import {
+  Popover,
+  PopoverButton,
+  PopoverPanel,
+  RadioGroup,
+  RadioGroupLabel,
+  RadioGroupOption,
+} from "@headlessui/vue"
+import { ref } from "vue"
+const options = [
+  { name: "全国", places: ["全部城市"] },
+  {
+    name: "机场",
+    places: [
+      "成都双流机场",
+      "成都天府机场",
+      "重庆江北机场",
+      "昆明长水机场",
+      "贵州龙洞堡机场",
+      "新疆喀什机场",
+      "丽江机场",
+      "西宁机场",
+      "迪庆机场",
+    ],
+  },
+  { name: "城市", places: ["琼州海峡", "连云港", "日照"] },
+  { name: "冬奥会赛区", places: ["张家口赛区", "延庆赛区", "京津冀赛区"] },
+]
+const selected = ref(options[0].places[0])
+</script>
+
+<template>
+  <div class="fixed right-12 top-1/3 z-10">
+    <Popover
+      v-slot="{ open }"
+      class="relative"
+    >
+      <PopoverButton
+        :class="[
+          open ? 'text-white' : 'text-black',
+          'hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75',
+          'flex w-32 items-center justify-center rounded-md p-2 text-base font-medium',
+          'bg-gradient-to-l from-[#7cf7ff] from-0% to-[#4b73ff] to-100%',
+        ]"
+      >
+        <div>{{ selected }}</div>
+      </PopoverButton>
+
+      <transition
+        enter-active-class="transition duration-200 ease-out"
+        enter-from-class="translate-y-1 opacity-0"
+        enter-to-class="translate-y-0 opacity-100"
+        leave-active-class="transition duration-150 ease-in"
+        leave-from-class="translate-y-0 opacity-100"
+        leave-to-class="translate-y-1 opacity-0"
+      >
+        <PopoverPanel
+          :class="[
+            'absolute left-1/2 mt-3 -translate-x-1/2 transform overflow-auto px-4 scrollbar-hide',
+            'z-10 h-[450px] w-[200px]',
+          ]"
+        >
+          <RadioGroup
+            v-model="selected"
+            v-for="option in options"
+          >
+            <!-- 按钮组名 -->
+            <RadioGroupLabel class="text-white">
+              {{ option.name }}
+            </RadioGroupLabel>
+            <!-- 按钮 -->
+            <RadioGroupOption
+              as="template"
+              v-for="(place, idx) in option.places"
+              :key="idx"
+              :value="place"
+              v-slot="{ active, checked }"
+            >
+              <div
+                :class="[
+                  active
+                    ? 'ring-2 ring-white/60 ring-offset-2 ring-offset-sky-300'
+                    : '',
+                  checked ? 'bg-sky-900/75 text-white' : 'bg-white',
+                  'relative my-3 flex cursor-pointer rounded-lg px-5 py-4 shadow-md focus:outline-none',
+                ]"
+              >
+                <div class="flex w-full items-center justify-between">
+                  <div class="flex items-center">
+                    <RadioGroupLabel
+                      as="p"
+                      :class="checked ? 'text-white' : 'text-gray-900'"
+                      class="font-medium"
+                    >
+                      {{ place }}
+                    </RadioGroupLabel>
+                  </div>
+                  <svg
+                    class="h-6 w-6"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                  >
+                    <circle
+                      cx="12"
+                      cy="12"
+                      r="12"
+                      fill="#fff"
+                      fill-opacity="0.2"
+                    />
+                    <path
+                      d="M7 13l3 3 7-7"
+                      stroke="#fff"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </RadioGroupOption>
+          </RadioGroup>
+        </PopoverPanel>
+      </transition>
+    </Popover>
+  </div>
+</template>
+
+<style scoped lang="less"></style>

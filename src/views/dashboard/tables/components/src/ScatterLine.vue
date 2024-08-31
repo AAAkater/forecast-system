@@ -136,10 +136,20 @@ const options = ref({
       formatter: function (val: any) {
         return parseFloat(val).toFixed(1)
       },
+      show: true,
+      style: {
+        colors: "white",
+      },
     },
   },
   yaxis: {
     tickAmount: 7,
+    labels: {
+      show: true,
+      style: {
+        colors: "white",
+      },
+    },
   },
   tooltip: {
     theme: "dark",

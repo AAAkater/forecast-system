@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref } from "vue"
-import BoxPlot from "./BoxPlot.vue"
+import BoxPlot from "./src/BoxPlot.vue"
 // import Options from "./components/Options.vue"
-import Scatter from "./Scatter.vue"
-import SelectTime from "./SelectTime.vue"
-import StepLine from "./StepLine.vue"
+import Scatter from "./src/ScatterLine.vue"
+import SelectTime from "./src/SelectTime.vue"
+import StepLine from "./src/StepLine.vue"
 const tables = ref([
   {
     title: "均方根误差 - 风速评分",
@@ -12,11 +12,11 @@ const tables = ref([
   },
   {
     title: "均方根误差 - 风速评分",
-    component: BoxPlot,
+    component: StepLine,
   },
   {
     title: "均方根误差 - 风速评分",
-    component: StepLine,
+    component: BoxPlot,
   },
 ])
 </script>
@@ -33,7 +33,10 @@ const tables = ref([
     <div>
       <!-- 时间选择 -->
       <div
-        class="my-5 flex h-40 w-full items-center justify-center rounded-lg border-4 border-blue-950 bg-[#0f1325] p-2"
+        :class="[
+          'my-4 flex w-full items-center justify-center rounded-xl p-4',
+          `bg-[url('@/assets/panel.png')] bg-[length:100%_100%] bg-no-repeat`,
+        ]"
       >
         <SelectTime />
       </div>
@@ -41,11 +44,14 @@ const tables = ref([
       <div
         v-for="(table, index) of tables"
         :key="index"
-        class="my-4 w-full rounded-xl border-4 border-blue-950 bg-[#0f1325] bg-opacity-75"
+        :class="[
+          'my-4 w-full rounded-xl',
+          `bg-[url('@/assets/panel.png')] bg-[length:100%_100%] bg-no-repeat`,
+        ]"
       >
         <div
           :class="[
-            'h-10 w-full pl-10 pt-2 font-sans text-lg',
+            'mt-8 h-10 w-full pl-10 pt-2 font-sans text-lg',
             `bg-[url('@/assets/card_bg.png')] bg-left bg-no-repeat`,
           ]"
         >

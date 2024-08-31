@@ -1,14 +1,12 @@
-<script setup lang="ts">
-import { message } from "ant-design-vue"
-import { onMounted } from "vue"
-
-onMounted(() => {
-  message.info("预测")
-})
-</script>
+<script setup lang="ts"></script>
 
 <template>
-  <div class="flex h-screen w-full items-center justify-center">预测</div>
+  <div class="h-screen w-full">
+    <iframe
+      class="h-screen w-full"
+      src="https://www.ventusky.com/?p=33.1;107.3;4&l=wind-10m&t=20240508/02&src=link&w=0IAKtpv2A"
+    />
+  </div>
 </template>
 
 <style scoped lang="less"></style>

@@ -82,6 +82,20 @@ const options = ref({
         return new Date(val).getFullYear()
       },
     },
+    labels: {
+      show: true,
+      style: {
+        colors: "white",
+      },
+    },
+  },
+  yaxis: {
+    labels: {
+      show: true,
+      style: {
+        colors: "white",
+      },
+    },
   },
   tooltip: {
     shared: false,
