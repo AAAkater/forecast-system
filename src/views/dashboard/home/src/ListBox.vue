@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// import ocn from '@/assets/icons/checked.svg'
+import { AimOutlined, CheckOutlined } from "@ant-design/icons-vue"
 import {
   Popover,
   PopoverButton,
@@ -32,21 +32,38 @@ const selected = ref(options[0].places[0])
 </script>
 
 <template>
-  <div class="fixed right-12 top-1/3 z-10">
+  <div class="fixed right-12 top-1/3 z-10 w-52">
+    <div
+      :class="[
+        'my-2 pl-4 text-sm text-white',
+        `bg-[url('@/assets/card_bg.png')] bg-[length:100%_100%] bg-left bg-no-repeat`,
+      ]"
+    >
+      城市位置
+    </div>
     <Popover
       v-slot="{ open }"
       class="relative"
     >
-      <PopoverButton
-        :class="[
-          open ? 'text-white' : 'text-black',
-          'hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75',
-          'flex w-32 items-center justify-center rounded-md p-2 text-base font-medium',
-          'bg-gradient-to-l from-[#7cf7ff] from-0% to-[#4b73ff] to-100%',
-        ]"
-      >
-        <div>{{ selected }}</div>
-      </PopoverButton>
+      <div class="flex h-16 items-center justify-between">
+        <img
+          src="@/assets/icons/city_2.svg"
+          class="ml-4 h-12"
+        />
+        <div class="">
+          <div class="text-white">当前城市 共计15座</div>
+          <PopoverButton
+            :class="[
+              open ? 'text-white' : 'text-black',
+              'flex h-8 w-32 items-center justify-center rounded-md text-base font-medium',
+              'hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75',
+              'bg-blue-400/50',
+            ]"
+          >
+            <div>{{ selected }}</div>
+          </PopoverButton>
+        </div>
+      </div>
 
       <transition
         enter-active-class="transition duration-200 ease-out"
@@ -59,7 +76,7 @@ const selected = ref(options[0].places[0])
         <PopoverPanel
           :class="[
             'absolute left-1/2 mt-3 -translate-x-1/2 transform overflow-auto px-4 scrollbar-hide',
-            'z-10 h-[450px] w-[200px]',
+            'z-10 h-[450px]',
           ]"
         >
           <RadioGroup
@@ -67,7 +84,7 @@ const selected = ref(options[0].places[0])
             v-for="option in options"
           >
             <!-- 按钮组名 -->
-            <RadioGroupLabel class="text-white">
+            <RadioGroupLabel class="text-sm text-white">
               {{ option.name }}
             </RadioGroupLabel>
             <!-- 按钮 -->
@@ -84,39 +101,21 @@ const selected = ref(options[0].places[0])
                     ? 'ring-2 ring-white/60 ring-offset-2 ring-offset-sky-300'
                     : '',
                   checked ? 'bg-sky-900/75 text-white' : 'bg-white',
-                  'relative my-3 flex cursor-pointer rounded-lg px-5 py-4 shadow-md focus:outline-none',
+                  'relative my-1 flex w-40 cursor-pointer rounded-lg py-2 shadow-md focus:outline-none',
                 ]"
               >
-                <div class="flex w-full items-center justify-between">
-                  <div class="flex items-center">
-                    <RadioGroupLabel
-                      as="p"
-                      :class="checked ? 'text-white' : 'text-gray-900'"
-                      class="font-medium"
-                    >
-                      {{ place }}
-                    </RadioGroupLabel>
-                  </div>
-                  <svg
-                    class="h-6 w-6"
-                    viewBox="0 0 24 24"
-                    fill="none"
+                <div class="flex w-full items-center justify-around">
+                  <AimOutlined />
+                  <RadioGroupLabel
+                    as="p"
+                    :class="checked ? 'text-white' : 'text-gray-900'"
+                    class="text-sm font-medium"
                   >
-                    <circle
-                      cx="12"
-                      cy="12"
-                      r="12"
-                      fill="#fff"
-                      fill-opacity="0.2"
-                    />
-                    <path
-                      d="M7 13l3 3 7-7"
-                      stroke="#fff"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                  </svg>
+                    {{ place }}
+                  </RadioGroupLabel>
+                  <div class="flex items-center justify-center">
+                    <CheckOutlined v-show="checked" />
+                  </div>
                 </div>
               </div>
             </RadioGroupOption>
