@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { TransitionRoot } from "@headlessui/vue"
 import { onMounted, ref } from "vue"
-import Options from "./components/Options.vue"
+import Options from "./components/RightOptions.vue"
 import TimeTable from "./components/TimeTable.vue"
 const items = ref([
   {
