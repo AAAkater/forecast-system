@@ -71,7 +71,7 @@ watch(test_value, () => {
 </script>
 
 <template>
-  <div class="w-full xl:max-w-md">
+  <div class="w-full 2xl:max-w-md">
     <TabGroup :default-index="1">
       <TabList class="BG flex space-x-1 rounded-xl p-1">
         <Tab

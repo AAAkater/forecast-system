@@ -6,13 +6,16 @@ import Options from "./components/RightOptions.vue"
 <template>
   <main
     :class="[
-      'h-full w-[90%] text-white',
-      'overflow-auto scrollbar-hide xl:flex',
+      'ml-40 block h-screen w-full overflow-auto scrollbar-hide',
+      '2xl:flex',
     ]"
   >
     <!-- 表格 -->
     <div
-      :class="['h-full w-full overflow-auto p-5 scrollbar-hide', 'xl:w-[70%]']"
+      :class="[
+        'h-full w-full overflow-auto scrollbar-hide',
+        'tables_width 2xl:w-[70%]',
+      ]"
     >
       <Tables />
     </div>
@@ -20,7 +23,7 @@ import Options from "./components/RightOptions.vue"
     <div
       :class="[
         'flex w-full items-start justify-center p-0',
-        'xl:w-[30%] xl:items-center xl:p-6',
+        'options_width 2xl:w-[30%] 2xl:items-center 2xl:p-6',
       ]"
     >
       <Options />
@@ -28,4 +31,13 @@ import Options from "./components/RightOptions.vue"
   </main>
 </template>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+@media (min-width: 1750px) {
+  .tables_width {
+    width: 80%;
+  }
+  .options_width {
+    width: 20%;
+  }
+}
+</style>
