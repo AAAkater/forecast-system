@@ -1,4 +1,4 @@
-import "@/assets/main.css"
+import "./main.css"
 
 import router from "@/router"
 import pinia from "@/stores"
