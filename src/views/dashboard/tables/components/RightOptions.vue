@@ -9,7 +9,9 @@ import {
   TabPanel,
   TabPanels,
 } from "@headlessui/vue"
-import { ref, watch } from "vue"
+import { ref } from "vue"
+import DialogTable from "./src/DialogTable.vue"
+const isOpen = ref(false)
 
 const tabs = ref([
   {
@@ -37,12 +39,22 @@ const tabs = ref([
 const wind_items = ref([
   {
     name: "1小时平均风",
+    click: () => {
+      console.log("1")
+      isOpen.value = true
+    },
   },
   {
     name: "1小时阵风",
+    click: () => {
+      console.log("2")
+    },
   },
   {
     name: "3小时阵风",
+    click: () => {
+      console.log("3")
+    },
   },
 ])
 
@@ -60,14 +72,13 @@ const test_items = ref([
 
 const wind_value = ref("1小时平均风")
 const test_value = ref("均方根误差")
+// watch(wind_value, () => {
+//   console.log(wind_value.value)
+// })
 
-watch(wind_value, () => {
-  console.log(wind_value.value)
-})
-
-watch(test_value, () => {
-  console.log(test_value.value)
-})
+// watch(test_value, () => {
+//   console.log(test_value.value)
+// })
 </script>
 
 <template>
@@ -91,7 +102,7 @@ watch(test_value, () => {
           >
             <SvgIcon
               :name="tab.icon"
-              class="mr-2 h-5 w-5"
+              class="mr-1 h-5 w-5"
             />
             {{ tab.name }}
           </button>
@@ -121,6 +132,7 @@ watch(test_value, () => {
               v-slot="{ active, checked }"
             >
               <button
+                @click="item.click"
                 :class="[
                   'flex w-full justify-center rounded-lg py-2.5 text-lg font-medium leading-5',
                   'ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
@@ -174,6 +186,8 @@ watch(test_value, () => {
         </TabPanel>
       </TabPanels>
     </TabGroup>
+
+    <DialogTable v-model:isOpen="isOpen" />
   </div>
 </template>
 
