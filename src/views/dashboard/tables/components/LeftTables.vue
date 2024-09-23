@@ -1,27 +1,56 @@
 <script setup lang="ts">
-import { markRaw, ref } from "vue"
+import { ExpandAltOutlined } from "@ant-design/icons-vue"
+import { Button, Modal } from "ant-design-vue"
+import { h, markRaw, ref } from "vue"
 import BoxPlot from "./src/BoxPlot.vue"
 import ScatterLine from "./src/ScatterLine.vue"
 import SelectTime from "./src/SelectTime.vue"
 import StepLine from "./src/StepLine.vue"
+const isOpen = ref(false)
+const currentTable = ref({
+  title: "",
+  table: markRaw(BoxPlot),
+})
+const showTable = (newTitle: string) => {
+  isOpen.value = true
+  currentTable.value.title = newTitle
+}
+
+const handleOk = (e: MouseEvent) => {
+  console.log(e)
+  isOpen.value = false
+}
+
 const tables = ref([
   {
     title: "均方根误差 - 风速评分",
     component: markRaw(ScatterLine),
-  },
-  {
-    title: "均方根误差 - 风速评分",
-    component: markRaw(StepLine),
+    click: () => {
+      console.log("1")
+      showTable("时效温度散点回归图")
+    },
   },
   {
     title: "均方根误差 - 风速评分",
     component: markRaw(BoxPlot),
+    click: () => {
+      console.log("3")
+      showTable("各个误差值的箱需图")
+    },
+  },
+  {
+    title: "均方根误差 - 风速评分",
+    component: markRaw(StepLine),
+    click: () => {
+      console.log("2")
+      showTable("风速评分")
+    },
   },
 ])
 </script>
 
 <template>
-  <div :class="['w-full bg-transparent', 'mt-40']">
+  <div :class="['w-full bg-transparent', 'mt-36']">
     <!-- 标题 -->
     <div
       :class="[
@@ -42,31 +71,56 @@ const tables = ref([
       <SelectTime />
     </div>
     <!-- 表格 -->
-    <ul :class="['list-none', 'grid grid-cols-[1fr_1fr] gap-x-4 gap-y-4']">
+    <ul
+      :class="[
+        'list-none',
+        'grid grid-cols-2 gap-y-5',
+        `bg-[url('@/assets/panel.png')] bg-[length:100%_100%] bg-no-repeat`,
+      ]"
+    >
       <li
         v-for="(table, index) of tables"
         :key="index"
-        :class="[
-          `bg-[url('@/assets/panel.png')] bg-[length:100%_100%] bg-no-repeat`,
-        ]"
+        class="last:col-span-2"
       >
+        <!-- 表格名 -->
         <div
           :class="[
-            'mt-2 h-10 w-full pl-10 pt-2',
+            'mt-2 h-10 w-full px-5',
             `bg-[url('@/assets/card_bg.png')] bg-left bg-no-repeat`,
-            'font-sans text-lg text-white',
+            'flex items-center justify-between',
           ]"
         >
-          {{ table.title }}
+          <div class="font-sans text-lg text-white">
+            {{ table.title }}
+          </div>
+          <Button
+            ghost
+            size="large"
+            shape="circle"
+            :icon="h(ExpandAltOutlined)"
+            @click="table.click"
+          />
         </div>
-        <div class="h-auto w-full p-5">
+        <!-- 表格本体 -->
+        <div class="h-auto w-full p-4">
           <component
             :is="table.component"
-            class="rounded-xl bg-blue-700/20 p-2"
+            class="rounded-xl bg-blue-700/20"
           />
         </div>
       </li>
     </ul>
+
+    <Modal
+      v-model:open="isOpen"
+      :title="currentTable.title"
+      centered
+      @ok="handleOk"
+      width="2000px"
+    >
+      <BoxPlot tableHeight="800" />
+    </Modal>
   </div>
 </template>
 
