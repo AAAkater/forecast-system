@@ -1,6 +1,18 @@
 <script setup lang="ts">
 import { ref } from "vue"
 import VueApexCharts from "vue3-apexcharts"
+
+const props = defineProps({
+  tableHeight: {
+    default: 450,
+    type: [Number, String],
+  },
+  color: {
+    default: "white",
+    type: [String],
+  },
+})
+
 // 数据部分
 const series = ref([
   {
@@ -63,11 +75,14 @@ const series = ref([
 
 // 图像选项
 const options = ref({
+  // 图表
   chart: {
     type: "boxPlot",
-    height: 350,
+    height: "400",
   },
+  // 图表颜色
   colors: ["#008FFB", "#FEB019"],
+  // 标题
   title: {
     text: "各个误差值的箱需图",
     align: "left",
@@ -75,6 +90,7 @@ const options = ref({
       color: "#fff",
     },
   },
+  // x轴样式
   xaxis: {
     type: "datetime",
     tooltip: {
@@ -85,15 +101,18 @@ const options = ref({
     labels: {
       show: true,
       style: {
-        colors: "white",
+        colors: props.color,
+        fontSize: "18",
       },
     },
   },
+  // y轴样式
   yaxis: {
     labels: {
       show: true,
       style: {
-        colors: "white",
+        colors: props.color,
+        fontSize: "18",
       },
     },
   },
@@ -102,6 +121,7 @@ const options = ref({
     intersect: true,
     theme: "dark",
   },
+  // 网格
   legend: {
     labels: {
       colors: ["#fff", "#fff"],
@@ -113,7 +133,7 @@ const options = ref({
 <template>
   <VueApexCharts
     :options="options"
-    height="400"
+    :height="props.tableHeight"
     width="100%"
     type="boxPlot"
     :series="series"

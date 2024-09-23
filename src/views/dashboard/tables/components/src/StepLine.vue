@@ -1,7 +1,16 @@
 <script setup lang="ts">
 import { ref } from "vue"
 import VueApexCharts from "vue3-apexcharts"
-
+const props = defineProps({
+  tableHeight: {
+    default: 500,
+    type: [Number, String],
+  },
+  color: {
+    default: "white",
+    type: [String],
+  },
+})
 const series = ref([
   {
     name: "风速",
@@ -26,7 +35,7 @@ const series = ref([
 ])
 const options = {
   chart: {
-    height: 370,
+    height: 400,
     type: "line",
     zoom: {
       enabled: true,
@@ -81,7 +90,8 @@ const options = {
     labels: {
       show: true,
       style: {
-        colors: "white",
+        colors: props.color,
+        fontSize: "18",
       },
     },
   },
@@ -90,8 +100,10 @@ const options = {
     labels: {
       show: true,
       style: {
-        colors: "white",
+        colors: props.color,
+        fontSize: "18",
       },
+      offsetX: -15,
     },
   },
 
@@ -152,7 +164,7 @@ const options = {
 <template>
   <VueApexCharts
     :options="options"
-    height="400"
+    :height="props.tableHeight"
     width="100%"
     type="line"
     :series="series"

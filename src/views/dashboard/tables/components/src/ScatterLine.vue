@@ -1,6 +1,16 @@
 <script setup lang="ts">
 import { ref } from "vue"
 import VueApexCharts from "vue3-apexcharts"
+const props = defineProps({
+  tableHeight: {
+    default: 450,
+    type: [Number, String],
+  },
+  color: {
+    default: "white",
+    type: [String],
+  },
+})
 //数据
 const series = ref([
   {
@@ -116,13 +126,14 @@ const series = ref([
 // 图像选项
 const options = ref({
   chart: {
-    height: 350,
+    height: 400,
     type: "scatter",
     zoom: {
       enabled: true,
       type: "xy",
     },
   },
+  // 表格标题
   title: {
     text: "时效温度散点回归图",
     align: "left",
@@ -130,30 +141,35 @@ const options = ref({
       color: "#fff",
     },
   },
+  // x轴样式
   xaxis: {
     tickAmount: 10,
     labels: {
-      formatter: function (val: any) {
+      formatter: function (val: string) {
         return parseFloat(val).toFixed(1)
       },
       show: true,
       style: {
-        colors: "white",
+        colors: props.color,
+        fontSize: "18",
       },
     },
   },
+  // y轴样式
   yaxis: {
     tickAmount: 7,
     labels: {
       show: true,
       style: {
-        colors: "white",
+        colors: props.color,
+        fontSize: "18",
       },
     },
   },
   tooltip: {
     theme: "dark",
   },
+  // 网格
   legend: {
     labels: {
       colors: ["#fff", "#fff", "#fff"],
@@ -165,7 +181,7 @@ const options = ref({
 <template>
   <VueApexCharts
     :options="options"
-    height="400"
+    :height="props.tableHeight"
     width="100%"
     type="scatter"
     :series="series"
