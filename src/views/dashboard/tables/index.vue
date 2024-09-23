@@ -22,8 +22,8 @@ import Options from "./components/RightOptions.vue"
     <!-- 选项 -->
     <div
       :class="[
-        'flex w-full items-start justify-center p-0',
-        'options_width 2xl:w-[30%] 2xl:items-center 2xl:p-6',
+        'my-5 flex w-full items-start justify-center p-0',
+        'options_width 2xl:my-0 2xl:w-[30%] 2xl:items-center 2xl:p-6',
       ]"
     >
       <Options />
